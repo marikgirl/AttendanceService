@@ -9,14 +9,14 @@ import java.util.Objects;
 public class Teacher extends User{
     @ElementList(inline = true, required = false)
     @CsvBindByName
-    private List<Long> groupsById;
+    private List<Long> groupsId;
 
-    public List<Long> getGroupsById() {
-        return groupsById;
+    public List<Long> getGroupsId() {
+        return groupsId;
     }
 
-    public void setGroupsById(List<Long> groupsById) {
-        this.groupsById = groupsById;
+    public void setGroupsId(List<Long> groupsId) {
+        this.groupsId = groupsId;
     }
 
     @Override
@@ -25,18 +25,18 @@ public class Teacher extends User{
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Teacher teacher = (Teacher) o;
-        return Objects.equals(groupsById, teacher.groupsById);
+        return Objects.equals(groupsId, teacher.groupsId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), groupsById);
+        return Objects.hash(super.hashCode(), groupsId);
     }
 
     @Override
     public String toString() {
         return "Teacher{" +
-                "groupsById=" + groupsById +
+                "groupsById=" + groupsId +
                 ", id=" + id +
                 ", name='" + name + '\'' +
                 '}';

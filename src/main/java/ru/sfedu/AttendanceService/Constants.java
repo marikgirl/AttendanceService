@@ -7,6 +7,10 @@ public class Constants {
     public static final String DB_CONFIG_PASSWORD = "DB.PASSWORD";
     public static final String DB_CONFIG_DRIVER = "DB.DRIVER";
 
+    public static final String MG_HOST = "MG.HOST";
+    public static final String MG_PORT = "MG.PORT";
+    public static final String MG_DATABASE = "MG.DATABASE";
+
     public static final String ATTENDANCE_CSV_SOURCE= "CSV.ATTENDANCE.SOURCE";
     public static final String ATTENDANCE_XML_SOURCE = "XML.ATTENDANCE.SOURCE";
 

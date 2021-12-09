@@ -29,10 +29,11 @@ public class serviceClient {
         DataProviderCSV dataProviderCSV = new DataProviderCSV();
 
 
-//        parentBean.setId();
-//        parentBean.setName("Ivanova");
-//        parentBean.setDebt(0);
-//        dataProviderCSV.addParent(parentBean);
+        parentBean.setId();
+        parentBean.setName("someone");
+        dataProviderCSV.addParent(parentBean);
+        dataProviderCSV.editDebt(parentBean.getId(), 50, true);
+        dataProviderCSV.editDebt(parentBean.getId(), 20, false);
 //
 //        studentBean.setId();
 //        studentBean.setName("Student1");
@@ -83,7 +84,8 @@ public class serviceClient {
 //        dataProviderCSV.deleteSchoolRecord(schoolBean.getId());
         ;
 
-        log.info(dataProviderCSV.setAttendance("09-12-2021", "Programming", "Student", true));
+        //log.info(dataProviderCSV.setAttendance("09-12-2021", "Programming", "Student", true));
+
 
     }
 

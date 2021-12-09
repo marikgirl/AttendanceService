@@ -15,7 +15,7 @@ public class Student implements Serializable {
     private String name;
     @Element
     @CsvBindByName
-    private long parentById;
+    private long parentId;
     @Element
     @CsvBindByName
     private int classNumber;
@@ -43,12 +43,12 @@ public class Student implements Serializable {
         this.name = name;
     }
 
-    public long getParentById() {
-        return parentById;
+    public long getParentId() {
+        return parentId;
     }
 
-    public void setParentById(long parentById) {
-        this.parentById = parentById;
+    public void setParentId(long parentId) {
+        this.parentId = parentId;
     }
 
     public int getClassNumber() {
@@ -72,12 +72,12 @@ public class Student implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return id == student.id && parentById == student.parentById && classNumber == student.classNumber && Objects.equals(name, student.name) && Objects.equals(school, student.school);
+        return id == student.id && parentId == student.parentId && classNumber == student.classNumber && Objects.equals(name, student.name) && Objects.equals(school, student.school);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, parentById, classNumber, school);
+        return Objects.hash(id, name, parentId, classNumber, school);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class Student implements Serializable {
         return "Student{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", parentById=" + parentById +
+                ", parentById=" + parentId +
                 ", classNumber=" + classNumber +
                 ", school='" + school + '\'' +
                 '}';
