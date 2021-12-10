@@ -22,7 +22,7 @@
         </RollingFile>
     </Appenders>
     <Loggers>
-        <Logger name="ru.sfedu.AttendanceService" level="debug" additivity="false">
+        <Logger name="ru.sfedu.AttendanceService" level="trace" additivity="false">
             <AppenderRef ref="console" />
         </Logger>
         <Root level="DEBUG" additivity="false">

@@ -13,14 +13,16 @@ public class MongoChanges {
     private static final Logger log = LogManager.getLogger(Main.class);
 
     public static <T> MongoClient getConnectionToDB() throws IOException {
-        MongoClient mongoClient = new MongoClient(new ServerAddress(Constants.MG_HOST,
-                Integer.parseInt(Constants.MG_PORT)),
+        log.trace("Connecting to mongoDB");
+        MongoClient mongoClient = new MongoClient(new ServerAddress(Constants.MONGODB_HOST,
+                Integer.parseInt(Constants.MONGODB_PORT)),
                 MongoClientOptions.builder().build());
         return mongoClient;
     }
 
     public <T> boolean insertBeanIntoCollection(T bean) throws IOException {
-        DB database = getConnectionToDB().getDB(Constants.MG_DATABASE);
+        log.trace("Inserting bean into collection");
+        DB database = getConnectionToDB().getDB(Constants.MONGODB_DATABASE);
         DBCollection collection = database.getCollection(String.valueOf(bean.getClass()));
         collection.insert((DBObject) bean);
         return true;
