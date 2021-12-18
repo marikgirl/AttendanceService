@@ -14,12 +14,11 @@ import ru.sfedu.AttendanceService.utils.ConfigurationUtil;
 
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
 
@@ -30,7 +29,7 @@ public class DataProviderCSV implements IDataProvider{
     public boolean editGroupStudents(long groupId, long studentId, boolean isDelete) {
         boolean isGroupStudentsEdited = true;
         try{
-            log.info("Start editing Group students");
+            log.debug("Start editing Group students");
             Optional.of(isDelete).filter(p->p).ifPresent(p->deleteStudentFromGroup(groupId, studentId));
             Optional.of(!isDelete).filter(p->p).ifPresent(p-> {
                 Group group = (Group) getGroupById(groupId).get();
@@ -39,7 +38,7 @@ public class DataProviderCSV implements IDataProvider{
                 group.setStudentsId(groupStudents);
                 updateGroup(groupId, group);
             });
-            log.info("Editing Group students complete");
+            log.trace("Editing Group students complete");
         } catch(Exception e){
             log.error("Editing parent Error");
             log.error(e.getClass().getName() + ":" + e.getMessage());
@@ -51,12 +50,12 @@ public class DataProviderCSV implements IDataProvider{
     private boolean deleteStudentFromGroup(long groupId, long studentId){
         boolean isStudentDeleted = true;
         try{
-            log.info("Start deletong student from group");
+            log.debug("Start deleting student from group");
             Group group = (Group) getGroupById(groupId).get();
             List<Long> groupStudents = group.getStudentsId();
             Predicate<Long> isExisting = studentIndex -> studentIndex == groupStudents.indexOf(studentId);
             groupStudents.removeIf(isExisting);
-            log.info("Deleting student from group complete");
+            log.trace("Deleting student from group complete");
         } catch (Exception e){
             log.error("Deleting student from group Error");
             log.error(e.getClass().getName() + ":" + e.getMessage());
@@ -65,28 +64,15 @@ public class DataProviderCSV implements IDataProvider{
         return isStudentDeleted;
     }
 
-    private boolean addStudentToGroup(long groupId, long studentId){
-        boolean isStudentAdded = true;
-        try{
-            Group group = (Group) getGroupById(groupId).get();
-            List<Long> groupStudents = group.getStudentsId();
-            Optional.of(studentId).filter(p->p != 0).ifPresent(p->groupStudents.add(studentId));
-
-        } catch (Exception e){
-
-        }
-        return isStudentAdded;
-    }
-
     public boolean editGroup(long groupId, String groupName, boolean isDeleteGroup){
         boolean isGroupEdited = true;
         try{
-            log.info("Start editing Group");
+            log.debug("Start editing Group");
             Group group = (Group) getGroupById(groupId).get();
             group.setName(groupName);
             Optional.of(group.getId()).filter(p->p != 0 && !isDeleteGroup).ifPresent(p->updateGroup(groupId, group));
             Optional.of(group.getId()).filter(p->p != 0 && isDeleteGroup).ifPresent(p->deleteGroup(groupId));
-            log.info("Editing student complete");
+            log.trace("Editing student complete");
         } catch (Exception e){
             log.error("Editing student Error");
             log.error(e.getClass().getName() + ":" + e.getMessage());
@@ -98,7 +84,7 @@ public class DataProviderCSV implements IDataProvider{
     public boolean editStudent(long studentId, String studentName, long parentId, int classNumber, String school, boolean isDeleteStudent){
         boolean isStudentEdited = true;
         try{
-            log.info("Start editing Student");
+            log.debug("Start editing Student");
             Student student = (Student) getStudentById(studentId).get();
             student.setName(studentName);
             student.setParentId(parentId);
@@ -106,7 +92,7 @@ public class DataProviderCSV implements IDataProvider{
             student.setSchool(school);
             Optional.of(student.getId()).filter(p->p != 0 && !isDeleteStudent).ifPresent(p->updateStudent(studentId, student));
             Optional.of(student.getId()).filter(p->p != 0 && isDeleteStudent).ifPresent(p->deleteStudent(studentId));
-            log.info("Editing student complete");
+            log.trace("Editing student complete");
         } catch (Exception e){
             log.error("Editing student Error");
             log.error(e.getClass().getName() + ":" + e.getMessage());
@@ -118,12 +104,12 @@ public class DataProviderCSV implements IDataProvider{
     public boolean editParent(long parentId, String parentName, boolean isDeleteParent){
         boolean isParentEdited = true;
         try{
-            log.info("Start editing Parent");
+            log.debug("Start editing Parent");
             Parent parent = (Parent) getParentById(parentId).get();
             parent.setName(parentName);
             Optional.of(parent.getId()).filter(p->p != 0 && !isDeleteParent).ifPresent(p->updateParent(parentId, parent));
             Optional.of(parent.getId()).filter(p->p != 0 && isDeleteParent).ifPresent(p->deleteParent(parentId));
-            log.info("Editing parent complete");
+            log.trace("Editing parent complete");
         } catch (Exception e){
             log.error("Editing parent Error");
             log.error(e.getClass().getName() + ":" + e.getMessage());
@@ -135,14 +121,14 @@ public class DataProviderCSV implements IDataProvider{
     public boolean editDebt(long parentId, int debtAmount, boolean isIncreasing){
         boolean isDebtEdited = true;
         try{
-            log.info("Start editing parent debt");
+            log.debug("Start editing parent debt");
             Parent parent = (Parent) getParentById(parentId).get();
             int parentDebt = parent.getDebt();
             int finalDebtAmount = Math.abs(debtAmount);
             Optional.of(isIncreasing).filter(p->p).ifPresent(p->parent.setDebt(parentDebt + finalDebtAmount));
             Optional.of(!isIncreasing).filter(p->p).ifPresent(p->parent.setDebt(parentDebt - finalDebtAmount));
             isDebtEdited = updateParent(parentId, parent);
-            log.info("Editing parent debt completed");
+            log.trace("Editing parent debt completed");
         } catch(Exception e){
             log.error("Editing parent Error");
             log.error(e.getClass().getName() + ":" + e.getMessage());
@@ -154,7 +140,7 @@ public class DataProviderCSV implements IDataProvider{
     public long setAttendance(String dateString, String groupName, String studentName, boolean status, String absenceDetailsString){
         Attendance attBean = new Attendance();
         try{
-            log.info("Start setting new Attendance");
+            log.debug("Start setting new Attendance");
             attBean.setDate((LocalDate) setDate(dateString).orElse(
                     LocalDate.parse("01-01-1970", DateTimeFormatter.ofPattern("dd-MM-yyyy"))));
             attBean.setGroupById((long) selectGroup(groupName).get());
@@ -164,7 +150,7 @@ public class DataProviderCSV implements IDataProvider{
             attBean.setId();
             log.info(attBean.getId());
             addAttendance(attBean);
-            log.info("Setting Attendance complete");
+            log.trace("Setting Attendance complete");
         } catch(Exception e){
             log.error("Attendance setting Error");
             log.error(e.getClass().getName() + ":" + e.getMessage());
@@ -175,7 +161,7 @@ public class DataProviderCSV implements IDataProvider{
     private Optional getDetailFromString(String enumString){
         AbsenceDetails enumDetails = null;
         try{
-            log.info("Transforming String to Enum");
+            log.debug("Transforming String to Enum");
             enumString = enumString.toUpperCase(Locale.ROOT);
             enumDetails = AbsenceDetails.valueOf(enumString);
         } catch(Exception e){
@@ -188,11 +174,11 @@ public class DataProviderCSV implements IDataProvider{
     private Optional selectStudent(String studentStringName){
         Student student = new Student();
         try{
-            log.info("Start searching student record");
+            log.debug("Start searching student record");
             student = loadBeanList(Constants.STUDENT_CSV_SOURCE, student).stream()
                     .filter(studentBean -> Objects.equals(((Student) studentBean).getName(), studentStringName))
                     .findAny().get();
-            log.info("Searching complete");
+            log.trace("Searching complete");
         } catch(Exception e){
             log.error("Student setting Error");
             log.error(e.getClass().getName() + ":" + e.getMessage());
@@ -203,11 +189,11 @@ public class DataProviderCSV implements IDataProvider{
     private Optional selectGroup(String groupStringName){
         Group group = new Group();
         try{
-            log.info("Start searching group record");
+            log.debug("Start searching group record");
             group = loadBeanList(Constants.GROUP_CSV_SOURCE, group).stream()
                     .filter(groupBean -> Objects.equals(((Group) groupBean).getName(), groupStringName))
                     .findAny().get();
-            log.info("Searching complete");
+            log.trace("Searching complete");
         } catch(Exception e){
             log.error("Group setting Error");
             log.error(e.getClass().getName() + ":" + e.getMessage());
@@ -219,6 +205,7 @@ public class DataProviderCSV implements IDataProvider{
         LocalDate date = null;
         try{
             date = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            log.trace("Date parsing complete");
         } catch(Exception e){
             log.error("Parsing date error");
             log.error(e.getClass().getName() + ":" + e.getMessage());
@@ -229,11 +216,11 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean getAllAttendance() {
         try {
-            log.info("Start getting Attendance");
+            log.debug("Start getting Attendance");
             Attendance attBean = new Attendance();
             List<Attendance> attBeanList = loadBeanList(Constants.ATTENDANCE_CSV_SOURCE, attBean);
             attBeanList.stream().forEach(bean -> log.info(bean));
-            log.info("Reading complete");
+            log.trace("Reading complete");
         } catch (Exception e){
             log.error("Reading attendance error");
             log.error(e.getClass().getName() + ":" + e.getMessage());
@@ -245,11 +232,11 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean getAllGroups() {
         try {
-            log.info("Start getting Groups");
+            log.debug("Start getting Groups");
             Group groupBean= new Group();
             List<Group> groupBeanList = loadBeanList(Constants.GROUP_CSV_SOURCE, groupBean);
             groupBeanList.stream().forEach(bean -> log.info(bean));
-            log.info("Reading complete");
+            log.trace("Reading complete");
         } catch (Exception e){
             log.error("Reading groups error");
             log.error(e.getClass().getName() + ":" + e.getMessage());
@@ -261,11 +248,11 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean getAllParents() {
         try {
-            log.info("Start getting Parents");
+            log.debug("Start getting Parents");
             Parent parentBean = new Parent();
             List<Parent> parentBeanList = loadBeanList(Constants.PARENT_CSV_SOURCE, parentBean);
             parentBeanList.stream().forEach(bean -> log.info(bean));
-            log.info("Reading complete");
+            log.trace("Reading complete");
         } catch (Exception e){
             log.error("Reading parent error");
             log.error(e.getClass().getName() + ":" + e.getMessage());
@@ -277,11 +264,11 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean getAllStudents() {
         try {
-            log.info("Start getting Students");
+            log.debug("Start getting Students");
             Student studentBean = new Student();
             List<Student> studentBeanList = loadBeanList(Constants.STUDENT_CSV_SOURCE, studentBean);
             studentBeanList.stream().forEach(bean -> log.info(bean));
-            log.info("Reading complete");
+            log.trace("Reading complete");
         } catch (Exception e){
             log.error("Reading students error");
             log.error(e.getClass().getName() + ":" + e.getMessage());
@@ -293,11 +280,11 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean getAllTeachers() {
         try {
-            log.info("Start getting Teachers");
+            log.debug("Start getting Teachers");
             Teacher teacherBean = new Teacher();
             List<Teacher> teacherBeanList = loadBeanList(Constants.TEACHER_CSV_SOURCE, teacherBean);
             teacherBeanList.stream().forEach(bean -> log.info(bean));
-            log.info("Reading complete");
+            log.trace("Reading complete");
         } catch (Exception e){
             log.error("Reading teachers error");
             log.error(e.getClass().getName() + ":" + e.getMessage());
@@ -309,11 +296,11 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean getAllAdmins() {
         try {
-            log.info("Start getting Admins");
+            log.debug("Start getting Admins");
             Admin adminBean = new Admin();
             List<Admin> adminBeanList = loadBeanList(Constants.ADMIN_CSV_SOURCE, adminBean);
             adminBeanList.stream().forEach(bean -> log.info(bean));
-            log.info("Reading complete");
+            log.trace("Reading complete");
         } catch (Exception e){
             log.error("Reading admins error");
             log.error(e.getClass().getName() + ":" + e.getMessage());
@@ -328,15 +315,15 @@ public class DataProviderCSV implements IDataProvider{
             if (attendance == null){
                 throw new Exception("Adding a null data");
             }
-            log.info("Start adding attendance record: reading file");
+            log.debug("Start adding attendance record");
             Attendance attBean = new Attendance();
             List<Attendance> attBeanList = loadBeanList(Constants.ATTENDANCE_CSV_SOURCE, attBean);
-            log.info("Adding record");
             attBeanList.add(attendance);
-            log.info("Adding complete");
+            log.trace("Adding attendance record complete");
             saveFile(attBeanList);
-            MongoChanges mongoInsert = new MongoChanges();
-            mongoInsert.insertBeanIntoCollection(attendance);
+//            MongoChanges mongoInsert = new MongoChanges();
+//            mongoInsert.insertBeanIntoCollection(attendance);
+            writeToMongo("addAttendance", attendance);
         }
         catch(Exception e) {
             log.error("Adding attendance error");
@@ -352,15 +339,14 @@ public class DataProviderCSV implements IDataProvider{
             if (group == null){
                 throw new Exception("Adding a null data");
             }
-            log.info("Start adding group record: reading file");
+            log.debug("Start adding group record");
             Group groupBean = new Group();
             List<Group> groupBeanList = loadBeanList(Constants.GROUP_CSV_SOURCE, groupBean);
-            log.info("Adding group record");
             groupBeanList.add(group);
-            log.info("Group record added successfully");
+            log.trace("Adding group record complete");
             saveFile(groupBeanList);
-            MongoChanges mongoInsert = new MongoChanges();
-            mongoInsert.insertBeanIntoCollection(group);
+//            MongoChanges mongoInsert = new MongoChanges();
+//            mongoInsert.insertBeanIntoCollection(group);
         }
         catch(Exception e) {
             log.error("Adding group error");
@@ -376,15 +362,14 @@ public class DataProviderCSV implements IDataProvider{
             if (parent == null){
                 throw new Exception("Adding a null data");
             }
-            log.info("Start adding parent record: reading file");
+            log.debug("Start adding parent record");
             Parent parentBean = new Parent();
             List<Parent> parentBeanList = loadBeanList(Constants.PARENT_CSV_SOURCE, parentBean);
-            log.info("Adding parent record");
             parentBeanList.add(parent);
-            log.info("Parent record added successfully");
+            log.trace("Adding parent record complete");
             saveFile(parentBeanList);
-            MongoChanges mongo = new MongoChanges();
-            mongo.insertBeanIntoCollection(parent);
+//            MongoChanges mongo = new MongoChanges();
+//            mongo.insertBeanIntoCollection(parent);
         }
         catch(Exception e) {
             log.error("Adding parent error");
@@ -400,15 +385,14 @@ public class DataProviderCSV implements IDataProvider{
             if (student == null){
                 throw new Exception("Adding a null data");
             }
-            log.info("Start adding student record: reading file");
+            log.debug("Start adding student record");
             Student studentBean = new Student();
             List<Student> studentBeanList = loadBeanList(Constants.STUDENT_CSV_SOURCE, studentBean);
-            log.info("Adding student record");
             studentBeanList.add(student);
-            log.info("Student record added successfully");
+            log.trace("Adding student record complete");
             saveFile(studentBeanList);
-            MongoChanges mongoInsert = new MongoChanges();
-            mongoInsert.insertBeanIntoCollection(student);
+//            MongoChanges mongoInsert = new MongoChanges();
+//            mongoInsert.insertBeanIntoCollection(student);
         }
         catch(Exception e) {
             log.error("Adding student error");
@@ -424,15 +408,14 @@ public class DataProviderCSV implements IDataProvider{
             if (teacher == null){
                 throw new Exception("Adding a null data");
             }
-            log.info("Start adding student record: reading file");
+            log.debug("Start adding teacher record");
             Teacher teacherBean = new Teacher();
             List<Teacher> teacherBeanList = loadBeanList(Constants.TEACHER_CSV_SOURCE, teacherBean);
-            log.info("Adding teacher record");
             teacherBeanList.add(teacher);
-            log.info("Teacher record added successfully");
+            log.trace("Adding teacher record complete");
             saveFile(teacherBeanList);
-            MongoChanges mongoInsert = new MongoChanges();
-            mongoInsert.insertBeanIntoCollection(teacher);
+//            MongoChanges mongoInsert = new MongoChanges();
+//            mongoInsert.insertBeanIntoCollection(teacher);
         }
         catch(Exception e) {
             log.error("Adding teacher error");
@@ -448,15 +431,14 @@ public class DataProviderCSV implements IDataProvider{
             if (admin == null){
                 throw new Exception("Adding a null data");
             }
-            log.info("Start adding admin record: reading file");
+            log.debug("Start adding admin record");
             Admin adminBean = new Admin();
             List<Admin> adminBeanList = loadBeanList(Constants.ADMIN_CSV_SOURCE, adminBean);
-            log.info("Adding admin record");
             adminBeanList.add(admin);
-            log.info("Admin record added successfully");
+            log.trace("Adding record complete");
             saveFile(adminBeanList);
-            MongoChanges mongoInsert = new MongoChanges();
-            mongoInsert.insertBeanIntoCollection(admin);
+//            MongoChanges mongoInsert = new MongoChanges();
+//            mongoInsert.insertBeanIntoCollection(admin);
         }
         catch(Exception e) {
             log.error("Adding admin error");
@@ -469,8 +451,7 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean deleteAttendance(long id) {
         try {
-            log.info("Attendance deleting id = " + id);
-            log.info("Start deleting record: reading file");
+            log.info("Start deleting record");
             Attendance attendanceBean = new Attendance();
             List<Attendance> attendanceBeanList = loadBeanList(Constants.ATTENDANCE_CSV_SOURCE, attendanceBean);
             log.info("Searching required record");
@@ -491,8 +472,7 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean deleteGroup(long id) {
         try {
-            log.info("Group deleting id = " + id);
-            log.info("Start deleting record: reading file");
+            log.info("Start deleting record");
             Group groupBean = new Group();
             List<Group> groupBeanList = loadBeanList(Constants.GROUP_CSV_SOURCE, groupBean);
             log.info("Searching required record");
@@ -513,8 +493,7 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean deleteParent(long id) {
         try {
-            log.info("Parent deleting id = " + id);
-            log.info("Start deleting record: reading file");
+            log.info("Start deleting record");
             Parent parentBean = new Parent();
             List<Parent> parentBeanList = loadBeanList(Constants.PARENT_CSV_SOURCE, parentBean);
             log.info("Searching required record");
@@ -535,7 +514,7 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean deleteStudent(long id) {
         try {
-            log.info("Start deleting record: reading file");
+            log.info("Start deleting record");
             Student studentBean = new Student();
             List<Student> studentBeanList = loadBeanList(Constants.STUDENT_CSV_SOURCE, studentBean);
             log.info("Searching required record");
@@ -556,8 +535,7 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean deleteTeacher(long id) {
         try {
-            log.info("Teacher deleting id = " + id);
-            log.info("Start deleting record: reading file");
+            log.info("Start deleting record");
             Teacher teacherBean = new Teacher();
             List<Teacher> teacherBeanList = loadBeanList(Constants.TEACHER_CSV_SOURCE, teacherBean);
             log.info("Searching required record");
@@ -578,8 +556,7 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean deleteAdmin(long id) {
         try {
-            log.info("Admin deleting id = " + id);
-            log.info("Start deleting record: reading file");
+            log.info("Start deleting record");
             Admin adminBean = new Admin();
             List<Admin> adminBeanList = loadBeanList(Constants.ADMIN_CSV_SOURCE, adminBean);
             log.info("Searching required record");
@@ -608,8 +585,8 @@ public class DataProviderCSV implements IDataProvider{
             log.info("Insert new values");
             attBeanList.set(index, attendance);
             saveFile(attBeanList);
-            MongoChanges mongoInsert = new MongoChanges();
-            mongoInsert.insertBeanIntoCollection(getAttendanceById(id).get());
+//            MongoChanges mongoInsert = new MongoChanges();
+//            mongoInsert.insertBeanIntoCollection(getAttendanceById(id).get());
             log.info("Updating complete");
         }
         catch(Exception e) {
@@ -631,8 +608,8 @@ public class DataProviderCSV implements IDataProvider{
             log.info("Insert new values");
             groupBeanList.set(index, group);
             saveFile(groupBeanList);
-            MongoChanges mongoInsert = new MongoChanges();
-            mongoInsert.insertBeanIntoCollection(getGroupById(id).get());
+//            MongoChanges mongoInsert = new MongoChanges();
+//            mongoInsert.insertBeanIntoCollection(getGroupById(id).get());
             log.info("Updating complete");
         }
         catch(Exception e) {
@@ -655,8 +632,8 @@ public class DataProviderCSV implements IDataProvider{
             log.info("Insert new values");
             parentBeanList.set(index, parent);
             saveFile(parentBeanList);
-            MongoChanges mongoInsert = new MongoChanges();
-            mongoInsert.insertBeanIntoCollection(getParentById(id).get());
+//            MongoChanges mongoInsert = new MongoChanges();
+//            mongoInsert.insertBeanIntoCollection(getParentById(id).get());
             log.info("Updating complete");
         }
         catch(Exception e) {
@@ -678,8 +655,8 @@ public class DataProviderCSV implements IDataProvider{
             log.info("Insert new values");
             studentBeanList.set(index, student);
             saveFile(studentBeanList);
-            MongoChanges mongoInsert = new MongoChanges();
-            mongoInsert.insertBeanIntoCollection(getStudentById(id).get());
+//            MongoChanges mongoInsert = new MongoChanges();
+//            mongoInsert.insertBeanIntoCollection(getStudentById(id).get());
             log.info("Updating complete");
         }
         catch(Exception e) {
@@ -701,8 +678,8 @@ public class DataProviderCSV implements IDataProvider{
             log.info("Insert new values");
             teacherBeanList.set(index, teacher);
             saveFile(teacherBeanList);
-            MongoChanges mongoInsert = new MongoChanges();
-            mongoInsert.insertBeanIntoCollection(getTeacherById(id).get());
+//            MongoChanges mongoInsert = new MongoChanges();
+//            mongoInsert.insertBeanIntoCollection(getTeacherById(id).get());
             log.info("Updating complete");
         }
         catch(Exception e) {
@@ -724,8 +701,9 @@ public class DataProviderCSV implements IDataProvider{
             log.info("Insert new values");
             adminBeanList.set(index, admin);
             saveFile(adminBeanList);
-            MongoChanges mongoInsert = new MongoChanges();
-            mongoInsert.insertBeanIntoCollection(getAdminById(id).get());
+//            MongoChanges mongoInsert = new MongoChanges();
+//            mongoInsert.insertBeanIntoCollection(getAdminById(id).get());
+            writeToMongo("updateAdmin", adminBean);
             log.info("Updating complete");
         }
         catch(Exception e) {
@@ -742,7 +720,7 @@ public class DataProviderCSV implements IDataProvider{
         try {
             log.info("Start receiving student record by id");
             attBean = loadBeanList(Constants.ATTENDANCE_CSV_SOURCE, attBean).stream()
-                    .filter(beans-> ((Attendance) beans).getId() == id)
+                    .filter(bean-> ((Attendance) bean).getId() == id)
                     .findAny().get();
             log.info("Receiving record complete");
         }
@@ -759,7 +737,7 @@ public class DataProviderCSV implements IDataProvider{
         try {
             log.info("Start receiving student record by id");
             groupBean = loadBeanList(Constants.GROUP_CSV_SOURCE, groupBean).stream()
-                    .filter(beans-> ((Group) beans).getId() == id)
+                    .filter(bean-> ((Group) bean).getId() == id)
                     .findAny().get();
             log.info("Receiving record complete");
         }
@@ -776,7 +754,7 @@ public class DataProviderCSV implements IDataProvider{
         try {
             log.info("Start receiving parent record by id");
             parentBean = loadBeanList(Constants.PARENT_CSV_SOURCE, parentBean).stream()
-                    .filter(beans-> ((Parent) beans).getId() == id)
+                    .filter(bean-> ((Parent) bean).getId() == id)
                     .findAny().get();
             log.info("Receiving record complete");
         }
@@ -793,7 +771,7 @@ public class DataProviderCSV implements IDataProvider{
         try {
             log.info("Start receiving student record by id");
             studentBean = loadBeanList(Constants.STUDENT_CSV_SOURCE, studentBean).stream()
-                    .filter(beans-> ((Student) beans).getId() == id)
+                    .filter(bean-> ((Student) bean).getId() == id)
                     .findAny().get();
             log.info("Receiving record complete");
         }
@@ -810,7 +788,7 @@ public class DataProviderCSV implements IDataProvider{
         try {
             log.info("Start receiving teacher record by id");
             teacherBean = loadBeanList(Constants.TEACHER_CSV_SOURCE, teacherBean).stream()
-                    .filter(beans-> ((Teacher) beans).getId() == id)
+                    .filter(bean-> ((Teacher) bean).getId() == id)
                     .findAny().get();
             log.info("Receiving record complete");
         }
@@ -827,7 +805,7 @@ public class DataProviderCSV implements IDataProvider{
         try {
             log.info("Start receiving admin record by id");
             adminBean = loadBeanList(Constants.ADMIN_CSV_SOURCE, adminBean).stream()
-                    .filter(beans-> ((Admin) beans).getId() == id)
+                    .filter(bean-> ((Admin) bean).getId() == id)
                     .findAny().get();
             log.info("Receiving record complete");
         }
@@ -880,8 +858,19 @@ public class DataProviderCSV implements IDataProvider{
         return loadedBeanList;
     }
 
+    private <T> boolean writeToMongo(String methodName, T bean) throws IOException {
+        HistoryContent changedBean = new HistoryContent();
+        changedBean.setActor("system");
+        changedBean.setClassName(bean.getClass().getSimpleName());
+        changedBean.setCreatedDate(LocalDateTime.now().toString());
+        changedBean.setObject(bean);
+        changedBean.setMethodName(methodName);
+        MongoChanges mngdb = new MongoChanges();
+        mngdb.insertBeanIntoCollection(changedBean);
+        return true;
+    }
+
     private  <T> String findPath(List<T> bean){
-        log.info("Class of elements inside list: "+bean.get(0).getClass().getSimpleName());
         switch(bean.get(0).getClass().getSimpleName()) {
             case "Attendance":
                 return Constants.ATTENDANCE_CSV_SOURCE;

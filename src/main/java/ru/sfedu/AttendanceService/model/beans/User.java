@@ -28,6 +28,10 @@ public class User implements Serializable {
         this.name = name;
     }
 
+    public void setId(long id){
+        this.id = id;
+    }
+
     public void setId() {
         this.id = System.currentTimeMillis();
     }

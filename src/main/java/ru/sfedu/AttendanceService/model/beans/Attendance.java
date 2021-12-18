@@ -37,6 +37,10 @@ public class Attendance implements Serializable {
 
     public void setId() {this.id = System.currentTimeMillis();}
 
+    public void setId(long id){
+        this.id = id;
+    }
+
     public LocalDate getDate() {
         return date;
     }
@@ -61,7 +65,7 @@ public class Attendance implements Serializable {
         this.studentById = studentById;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 

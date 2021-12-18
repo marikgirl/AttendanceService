@@ -28,6 +28,10 @@ public class Parent implements Serializable {
 
     public void setId() {this.id = System.currentTimeMillis();}
 
+    public void setId(long id){
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }

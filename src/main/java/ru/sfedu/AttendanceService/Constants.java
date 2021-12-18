@@ -7,6 +7,11 @@ public class Constants {
     public static final String DB_CONFIG_PASSWORD = "DB.PASSWORD";
     public static final String DB_CONFIG_DRIVER = "DB.DRIVER";
 
+    public static final String H2_CONFIG_URL = "H2.URL";
+    public static final String H2_CONFIG_USER = "H2.USER";
+    public static final String H2_CONFIG_PASSWORD = "H2.PASSWORD";
+    public static final String H2_CONFIG_DRIVER = "H2.DRIVER";
+
     public static final String MONGODB_HOST = "MONGODB.HOST";
     public static final String MONGODB_PORT = "MONGODB.PORT";
     public static final String MONGODB_DATABASE = "MONGODB.DATABASE";
