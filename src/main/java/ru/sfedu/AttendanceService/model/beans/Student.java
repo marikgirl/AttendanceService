@@ -27,6 +27,14 @@ public class Student implements Serializable {
         this.id = 0L;
     }
 
+    public Student(long id, String name, long parentId, int classNumber, String school) {
+        this.id = id;
+        this.name = name;
+        this.parentId = parentId;
+        this.classNumber = classNumber;
+        this.school = school;
+    }
+
     public long getId() {
         return id;
     }

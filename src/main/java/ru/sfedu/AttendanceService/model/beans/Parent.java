@@ -22,6 +22,12 @@ public class Parent implements Serializable {
         this.debt = 0;
     }
 
+    public Parent(long id, String name, int debt) {
+        this.id = id;
+        this.name = name;
+        this.debt = debt;
+    }
+
     public long getId() {
         return id;
     }

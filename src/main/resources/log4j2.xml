@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN">
-    <Properties>
-        <Property name="logPath">target/logs</Property>
-        <Property name="rollingFileName">log_name</Property>
-    </Properties>
+<Configuration status="info">
     <Parameters>
         <param name="MaxBackupIndex" value="2"/>
     </Parameters>
@@ -11,21 +7,22 @@
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
         </Console>
-        <RollingFile name="rollingFile"
-                     fileName="roll.log"
+        <RollingFile name="file"
+                     fileName="./src/main/resources/logs/logs.log"
                      filePattern="${logPath}/${rollingFileName}_%d{yyyy-MM-dd}.log"
                      append = "true">
             <PatternLayout pattern="%d{MM.dd HH.mm.ss} %5p\t%c:%L - %m%n" />
             <Policies>
-                <SizeBasedTriggeringPolicy size="1B" />
+                <SizeBasedTriggeringPolicy size="512 KB" />
             </Policies>
         </RollingFile>
     </Appenders>
     <Loggers>
-        <Logger name="ru.sfedu.AttendanceService" level="trace" additivity="false">
-            <AppenderRef ref="console" />
+        <Logger name = "ru.sfedu.AttendanceService" level = "info" additivity = "false">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
         </Logger>
-        <Root level="DEBUG" additivity="false">
+        <Root level="DEBUG">
         </Root>
     </Loggers>
 </Configuration>

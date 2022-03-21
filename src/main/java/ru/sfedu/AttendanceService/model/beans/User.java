@@ -16,6 +16,11 @@ public class User implements Serializable {
         this.id = 0L;
     }
 
+    public User(long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public long getId() {
         return id;
     }
@@ -51,7 +56,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "Emp{" +
+        return "User{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 '}';

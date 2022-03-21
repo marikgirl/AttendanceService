@@ -3,50 +3,57 @@ package ru.sfedu.AttendanceService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.*;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.MongoClientSettings;
+import com.mongodb.MongoClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bson.Document;
 import ru.sfedu.AttendanceService.model.beans.HistoryContent;
-import ru.sfedu.AttendanceService.utils.ConfigurationUtil;
 
 import java.io.IOException;
 
-import static com.mongodb.MongoClientOptions.builder;
-import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
-import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+import static ru.sfedu.AttendanceService.utils.ConfigurationUtil.getConfigurationEntry;
 
 
 public class MongoChanges {
 
     private static final Logger log = LogManager.getLogger(Main.class);
 
+    /**
+     * Creates connection to MongoDB
+     * @return <T>MongoClient mongoClient
+     */
     public static <T> MongoClient getConnectionToDB() throws IOException {
-        log.trace("Connecting to mongoDB");
+        log.debug("getConnectionToDB[0]: Connecting to mongoDB");
 
-        ConnectionString connectionString = new ConnectionString("mongodb+srv://marik_girl:Wx28he3QNFVkqpG@cluster0.b2beu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
-        MongoClientSettings settings = MongoClientSettings.builder()
-                .applyConnectionString(connectionString)
-                .build();
-        MongoClient mongoClient = MongoClients.create(settings);
+        MongoClient mongoClient = new MongoClient(
+                new ServerAddress(getConfigurationEntry(Constants.MONGODB_HOST),
+                        Integer.parseInt(getConfigurationEntry(Constants.MONGODB_PORT))),
+                MongoClientOptions.builder().serverSelectionTimeout(10).build());
 
+        log.debug("getConnectionToDB[1]: Connected to mongoDB");
         return mongoClient;
     }
 
+    /**
+     * Makes String out of Bean with changes
+     * @param obj object of HistoryContent with changes
+     * @return String ObjectMapper as String
+     */
     private static String beanToString(HistoryContent obj) throws JsonProcessingException {
         return new ObjectMapper().findAndRegisterModules().writeValueAsString(obj);
     }
 
+    /**
+     * Inserts HistoryContent object into MongoDB
+     * @param bean object of HistoryContent with changes
+     * @return boolean isInserted
+     */
     public <T> boolean insertBeanIntoCollection(HistoryContent bean) throws IOException {
-        log.trace("Inserting bean into collection");
+        log.debug("insertBeanIntoCollection[0]: Inserting bean into collection");
 
-        getConnectionToDB().getDatabase(ConfigurationUtil
-                .getConfigurationEntry(Constants.MONGODB_DATABASE)).getCollection(bean.getClass().getSimpleName())
+        getConnectionToDB().getDatabase(getConfigurationEntry(Constants.MONGODB_DATABASE)).getCollection(bean.getClass().getSimpleName())
                 .insertOne(Document.parse(beanToString(bean)));
-
+        log.debug("insertBeanIntoCollection[1]: Inserting bean into collection complete");
         return true;
     }
 

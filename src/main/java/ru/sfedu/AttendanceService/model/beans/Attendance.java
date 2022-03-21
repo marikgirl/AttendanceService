@@ -33,6 +33,15 @@ public class Attendance implements Serializable {
         this.id = 0L;
     }
 
+    public Attendance(long id, LocalDate date, long groupById, long studentById, boolean status, AbsenceDetails details) {
+        this.id = id;
+        this.date = date;
+        this.groupById = groupById;
+        this.studentById = studentById;
+        this.status = status;
+        this.details = details;
+    }
+
     public long getId() {return id;}
 
     public void setId() {this.id = System.currentTimeMillis();}

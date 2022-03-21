@@ -1,0 +1,10 @@
+<main>
+   <object class="ru.sfedu.AttendanceService.model.beans.Admin">
+      <position>Owner</position>
+      <education>RSPU</education>
+   </object>
+   <object class="ru.sfedu.AttendanceService.model.beans.Admin">
+      <position>Owner</position>
+      <education>RSU</education>
+   </object>
+</main>

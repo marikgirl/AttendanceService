@@ -1,0 +1,12 @@
+<main>
+   <object class="ru.sfedu.AttendanceService.model.beans.Parent">
+      <id>1</id>
+      <name>Alexandra Strokes</name>
+      <debt>0</debt>
+   </object>
+   <object class="ru.sfedu.AttendanceService.model.beans.Parent">
+      <id>2</id>
+      <name>Graham Blur</name>
+      <debt>0</debt>
+   </object>
+</main>

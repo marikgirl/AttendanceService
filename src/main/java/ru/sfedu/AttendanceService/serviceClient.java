@@ -4,113 +4,76 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.util.StackLocatorUtil;
 import ru.sfedu.AttendanceService.api.DataProviderCSV;
+import ru.sfedu.AttendanceService.api.DataProviderH2;
+import ru.sfedu.AttendanceService.api.DataProviderXML;
 import ru.sfedu.AttendanceService.model.beans.*;
 
 import javax.swing.text.html.Option;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+
+import static ru.sfedu.AttendanceService.utils.ConfigurationUtil.getConfigurationEntry;
 
 
 public class serviceClient {
     private static Logger log = LogManager.getLogger(serviceClient.class);
 
     public serviceClient() {
-        log.debug("kursachClient[0]: starting application.........");
+        log.debug("AttendanceService[0]: starting application.........");
     }
 
-    public void logBasicSystemInfo() throws IOException {
-        Parent parentBean = new Parent();
-        Student studentBean = new Student();
-        Group groupBean = new Group();
-        List<Long> students = new ArrayList<>();
-        DataProviderCSV dataProviderCSV = new DataProviderCSV();
+    public void logBasicSystemInfo() {
 
 
-//        parentBean.setId();
-//        parentBean.setName("someone");
-//        dataProviderCSV.addParent(parentBean);
-//        dataProviderCSV.editDebt(parentBean.getId(), 50, true);
-//        dataProviderCSV.editDebt(parentBean.getId(), 20, false);
+
+//        Parent parentBean = new Parent();
+//        Student studentBean = new Student();
+//        Group groupBean = new Group();
+//        List<Long> students = new ArrayList<>();
+//        DataProviderH2 dataProviderH2 = new DataProviderH2();
+//
+//        parentBean.setId(2);
+//        parentBean.setName("Parent1");
+//        parentBean.setDebt(0);
+//        dataProviderH2.addParent(parentBean);
+//        parentBean.setName("justParent2");
+//        dataProviderH2.updateParent(parentBean.getId(), parentBean);
+//        dataProviderH2.deleteParent(1);
+//        dataProviderH2.getAllParents().get().stream().forEach(p->{
+//            log.info(p.getId() + p.getName() + p.getDebt());
+//        });
 //
 //        studentBean.setId();
 //        studentBean.setName("Student1");
 //        studentBean.setClassNumber(6);
 //        studentBean.setSchool("school 103");
-//        studentBean.setParentById(parentBean.getId());
-//
+//        studentBean.setParentId(parentBean.getId());
 //        students.add(studentBean.getId());
-//        dataProviderCSV.addStudent(studentBean);
+//        dataProviderXML.addStudent(studentBean);
 //
 //        studentBean.setId();
 //        studentBean.setName("Student2");
 //        studentBean.setClassNumber(7);
 //        studentBean.setSchool("school 103");
-//        studentBean.setParentById(parentBean.getId());
-//
+//        studentBean.setParentId(parentBean.getId());
 //        students.add(studentBean.getId());
-//        dataProviderCSV.addStudent(studentBean);
+//        dataProviderXML.addStudent(studentBean);
 //
 //        groupBean.setId();
 //        groupBean.setName("Programming");
-//        groupBean.setStudentsById(students);
-//        dataProviderCSV.addGroup(groupBean);
+//        groupBean.setStudentsId(students);
+//        dataProviderXML.addGroup(groupBean);
 //
-//        dataProviderCSV.getAllParents();
-//        dataProviderCSV.getAllStudents();
-//        dataProviderCSV.getAllGroups();
-
-
-//        School schoolBean = new School();
-//
-//        schoolBean.setAddress("new address");
-//        schoolBean.setId();
-//        schoolBean.setNumber(123);
-//        DataProviderCSV dataProviderCSV = new DataProviderCSV();
-//        DataProviderXML dataProviderXML = new DataProviderXML();
-//
-//        dataProviderCSV.addSchoolRecord(schoolBean);
-//        dataProviderXML.addSchoolRecord(schoolBean);
-//
-//        dataProviderCSV.viewAllSchool();
-//        dataProviderXML.viewAllSchool();
-//
-//        dataProviderCSV.deleteSchoolRecord(schoolBean.getId());
-//
-//        dataProviderCSV.viewAllSchool();
-//
-//        dataProviderCSV.deleteSchoolRecord(schoolBean.getId());
-        ;
-
-        log.info(dataProviderCSV.setAttendance("09-12-2021", "Programming", "Student", false, "circumstances"));
-
+//        dataProviderXML.getAllParents();
+//        dataProviderXML.getAllStudents();
+//        dataProviderXML.getAllGroups();
 
     }
 
-    public Optional getDetailFromString(String enumString){
-        AbsenceDetails enumDetails = null;
-        try{
-            enumDetails = AbsenceDetails.valueOf(enumString);
-        } catch(Exception e){
-            log.error("Enum parsing from String error");
-            log.error(e.getClass().getName() + ":" + e.getMessage());
-        }
-        return Optional.ofNullable(enumDetails);
-    }
-    public Enum<AbsenceDetails> a(String s){
-        AbsenceDetails ap = null;
-        s = s.toUpperCase(Locale.ROOT);
-//        log.info(s);
-        switch (s){
-            case "ILLNESS":
-                ap = AbsenceDetails.valueOf(s);
-            case "ABSENCE":
-                ap = AbsenceDetails.valueOf(s);
-            case "CIRCUMSTANCES":
-                ap = AbsenceDetails.valueOf(s);
-        }
-        return ap;
-    }
 }

@@ -12,24 +12,22 @@ import ru.sfedu.AttendanceService.MongoChanges;
 import ru.sfedu.AttendanceService.model.beans.*;
 import ru.sfedu.AttendanceService.utils.ConfigurationUtil;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
 
 public class DataProviderCSV implements IDataProvider{
 
     private static final Logger log = LogManager.getLogger(Main.class);
 
+    @Override
     public boolean editGroupStudents(long groupId, long studentId, boolean isDelete) {
         boolean isGroupStudentsEdited = true;
         try{
-            log.debug("Start editing Group students");
+            log.debug("editGroupStudents[0]: Start editing Group students");
             Optional.of(isDelete).filter(p->p).ifPresent(p->deleteStudentFromGroup(groupId, studentId));
             Optional.of(!isDelete).filter(p->p).ifPresent(p-> {
                 Group group = (Group) getGroupById(groupId).get();
@@ -38,53 +36,56 @@ public class DataProviderCSV implements IDataProvider{
                 group.setStudentsId(groupStudents);
                 updateGroup(groupId, group);
             });
-            log.trace("Editing Group students complete");
+            log.debug("editGroupStudents[1]: Editing Group students complete");
         } catch(Exception e){
-            log.error("Editing parent Error");
-            log.error(e.getClass().getName() + ":" + e.getMessage());
+            log.error("editGroupStudents[0]: Editing Group students Error");
+            log.error("editGroupStudents[1]: " + e.getClass().getName() + ":" + e.getMessage());
             isGroupStudentsEdited = false;
         }
         return isGroupStudentsEdited;
     }
 
-    private boolean deleteStudentFromGroup(long groupId, long studentId){
+    @Override
+    public boolean deleteStudentFromGroup(long groupId, long studentId){
         boolean isStudentDeleted = true;
         try{
-            log.debug("Start deleting student from group");
+            log.debug("deleteStudentFromGroup[0]: Start deleting student from group");
             Group group = (Group) getGroupById(groupId).get();
             List<Long> groupStudents = group.getStudentsId();
             Predicate<Long> isExisting = studentIndex -> studentIndex == groupStudents.indexOf(studentId);
             groupStudents.removeIf(isExisting);
-            log.trace("Deleting student from group complete");
+            log.debug("deleteStudentFromGroup[1]: Deleting student from group complete");
         } catch (Exception e){
-            log.error("Deleting student from group Error");
-            log.error(e.getClass().getName() + ":" + e.getMessage());
+            log.error("deleteStudentFromGroup[0]: Deleting student from group Error");
+            log.error("deleteStudentFromGroup[1]: " + e.getClass().getName() + ":" + e.getMessage());
             isStudentDeleted = false;
         }
         return isStudentDeleted;
     }
 
+    @Override
     public boolean editGroup(long groupId, String groupName, boolean isDeleteGroup){
         boolean isGroupEdited = true;
         try{
-            log.debug("Start editing Group");
+            log.debug("editGroup[0]: Start editing Group");
             Group group = (Group) getGroupById(groupId).get();
             group.setName(groupName);
             Optional.of(group.getId()).filter(p->p != 0 && !isDeleteGroup).ifPresent(p->updateGroup(groupId, group));
             Optional.of(group.getId()).filter(p->p != 0 && isDeleteGroup).ifPresent(p->deleteGroup(groupId));
-            log.trace("Editing student complete");
+            log.debug("editGroup[1]: Editing Group complete");
         } catch (Exception e){
-            log.error("Editing student Error");
-            log.error(e.getClass().getName() + ":" + e.getMessage());
+            log.error("editGroup[0]: Editing Group Error");
+            log.error("editGroup[1]: " + e.getClass().getName() + ":" + e.getMessage());
             isGroupEdited = false;
         }
         return isGroupEdited;
     }
 
+    @Override
     public boolean editStudent(long studentId, String studentName, long parentId, int classNumber, String school, boolean isDeleteStudent){
         boolean isStudentEdited = true;
         try{
-            log.debug("Start editing Student");
+            log.debug("editStudent[0]: Start editing Student");
             Student student = (Student) getStudentById(studentId).get();
             student.setName(studentName);
             student.setParentId(parentId);
@@ -92,55 +93,58 @@ public class DataProviderCSV implements IDataProvider{
             student.setSchool(school);
             Optional.of(student.getId()).filter(p->p != 0 && !isDeleteStudent).ifPresent(p->updateStudent(studentId, student));
             Optional.of(student.getId()).filter(p->p != 0 && isDeleteStudent).ifPresent(p->deleteStudent(studentId));
-            log.trace("Editing student complete");
+            log.debug("editStudent[1]: Editing student complete");
         } catch (Exception e){
-            log.error("Editing student Error");
-            log.error(e.getClass().getName() + ":" + e.getMessage());
+            log.error("editStudent[0]: Editing student Error");
+            log.error("editStudent[1]: " + e.getClass().getName() + ":" + e.getMessage());
             isStudentEdited = false;
         }
         return isStudentEdited;
     }
 
+    @Override
     public boolean editParent(long parentId, String parentName, boolean isDeleteParent){
         boolean isParentEdited = true;
         try{
-            log.debug("Start editing Parent");
+            log.debug("editParent[0]: Start editing Parent");
             Parent parent = (Parent) getParentById(parentId).get();
             parent.setName(parentName);
             Optional.of(parent.getId()).filter(p->p != 0 && !isDeleteParent).ifPresent(p->updateParent(parentId, parent));
             Optional.of(parent.getId()).filter(p->p != 0 && isDeleteParent).ifPresent(p->deleteParent(parentId));
-            log.trace("Editing parent complete");
+            log.debug("editParent[1]: Editing parent complete");
         } catch (Exception e){
-            log.error("Editing parent Error");
-            log.error(e.getClass().getName() + ":" + e.getMessage());
+            log.error("editParent[0]: Editing parent Error");
+            log.error("editParent[1]: " + e.getClass().getName() + ":" + e.getMessage());
             isParentEdited = false;
         }
         return isParentEdited;
     }
 
+    @Override
     public boolean editDebt(long parentId, int debtAmount, boolean isIncreasing){
         boolean isDebtEdited = true;
         try{
-            log.debug("Start editing parent debt");
+            log.debug("editDebt[0]: Start editing parent debt");
             Parent parent = (Parent) getParentById(parentId).get();
             int parentDebt = parent.getDebt();
             int finalDebtAmount = Math.abs(debtAmount);
             Optional.of(isIncreasing).filter(p->p).ifPresent(p->parent.setDebt(parentDebt + finalDebtAmount));
             Optional.of(!isIncreasing).filter(p->p).ifPresent(p->parent.setDebt(parentDebt - finalDebtAmount));
             isDebtEdited = updateParent(parentId, parent);
-            log.trace("Editing parent debt completed");
+            log.debug("editDebt[1]: Editing parent debt completed");
         } catch(Exception e){
-            log.error("Editing parent Error");
-            log.error(e.getClass().getName() + ":" + e.getMessage());
+            log.error("editDebt[0]: Editing parent debt Error");
+            log.error("editDebt[1]: " + e.getClass().getName() + ":" + e.getMessage());
             isDebtEdited = false;
         }
         return isDebtEdited;
     }
 
+    @Override
     public long setAttendance(String dateString, String groupName, String studentName, boolean status, String absenceDetailsString){
         Attendance attBean = new Attendance();
         try{
-            log.debug("Start setting new Attendance");
+            log.debug("setAttendance[0]: Start setting new Attendance");
             attBean.setDate((LocalDate) setDate(dateString).orElse(
                     LocalDate.parse("01-01-1970", DateTimeFormatter.ofPattern("dd-MM-yyyy"))));
             attBean.setGroupById((long) selectGroup(groupName).get());
@@ -150,10 +154,10 @@ public class DataProviderCSV implements IDataProvider{
             attBean.setId();
             log.info(attBean.getId());
             addAttendance(attBean);
-            log.trace("Setting Attendance complete");
+            log.debug("setAttendance[1]: Setting Attendance complete");
         } catch(Exception e){
-            log.error("Attendance setting Error");
-            log.error(e.getClass().getName() + ":" + e.getMessage());
+            log.error("setAttendance[0]: Attendance setting Error");
+            log.error("setAttendance[1]: " + e.getClass().getName() + ":" + e.getMessage());
         }
         return attBean.getId();
     }
@@ -161,173 +165,197 @@ public class DataProviderCSV implements IDataProvider{
     private Optional getDetailFromString(String enumString){
         AbsenceDetails enumDetails = null;
         try{
-            log.debug("Transforming String to Enum");
+            log.debug("getDetailFromString[0]: Transforming String to Enum");
             enumString = enumString.toUpperCase(Locale.ROOT);
             enumDetails = AbsenceDetails.valueOf(enumString);
+            log.debug("getDetailFromString[1]: Transforming String to Enum complete");
         } catch(Exception e){
-            log.error("Enum parsing from String error");
-            log.error(e.getClass().getName() + ":" + e.getMessage());
+            log.error("getDetailFromString[0]: Enum parsing from String error");
+            log.error("getDetailFromString[1]: " + e.getClass().getName() + ":" + e.getMessage());
         }
         return Optional.ofNullable(enumDetails);
     }
 
-    private Optional selectStudent(String studentStringName){
+    @Override
+    public Optional selectStudent(String studentStringName){
         Student student = new Student();
         try{
-            log.debug("Start searching student record");
-            student = loadBeanList(Constants.STUDENT_CSV_SOURCE, student).stream()
+            log.debug("selectStudent[0]: Start searching student record");
+            student = getAllBeans(Constants.STUDENT_CSV_SOURCE, student).stream()
                     .filter(studentBean -> Objects.equals(((Student) studentBean).getName(), studentStringName))
                     .findAny().get();
-            log.trace("Searching complete");
+            log.debug("selectStudent[1]: Searching complete");
         } catch(Exception e){
-            log.error("Student setting Error");
-            log.error(e.getClass().getName() + ":" + e.getMessage());
+            log.error("selectStudent[0]: Student searching Error");
+            log.error("selectStudent[1]: " + e.getClass().getName() + ":" + e.getMessage());
         }
         return Optional.of(student.getId());
     }
 
-    private Optional selectGroup(String groupStringName){
+    @Override
+    public Optional selectGroup(String groupStringName){
         Group group = new Group();
         try{
-            log.debug("Start searching group record");
-            group = loadBeanList(Constants.GROUP_CSV_SOURCE, group).stream()
+            log.debug("selectGroup[0]: Start searching group record");
+            group = getAllBeans(Constants.GROUP_CSV_SOURCE, group).stream()
                     .filter(groupBean -> Objects.equals(((Group) groupBean).getName(), groupStringName))
                     .findAny().get();
-            log.trace("Searching complete");
+            log.debug("selectGroup[1]: Searching Group complete");
         } catch(Exception e){
-            log.error("Group setting Error");
-            log.error(e.getClass().getName() + ":" + e.getMessage());
+            log.error("selectGroup[0]: Group searching Error");
+            log.error("selectGroup[1]: " + e.getClass().getName() + ":" + e.getMessage());
         }
         return Optional.of(group.getId());
     }
 
-    private Optional setDate(String dateString){
+    @Override
+    public Optional setDate(String dateString){
         LocalDate date = null;
         try{
+            log.debug("setDate[0]: Start parsing Date");
             date = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-            log.trace("Date parsing complete");
+            log.debug("setDate[1]: Date parsing complete");
         } catch(Exception e){
-            log.error("Parsing date error");
-            log.error(e.getClass().getName() + ":" + e.getMessage());
+            log.error("selectGroup[0]: Parsing date error");
+            log.error("selectGroup[1]: " + e.getClass().getName() + ":" + e.getMessage());
         }
         return Optional.ofNullable(date);
     }
 
     @Override
-    public boolean getAllAttendance() {
+    public Optional getAllDebts() {
+        return getAllParents();
+    }
+
+
+    @Override
+    public Optional getAllAttendance() {
+        List<Attendance> attBeanList = null;
         try {
-            log.debug("Start getting Attendance");
+            log.debug("getAllAttendance[0]: Start getting all Attendance");
             Attendance attBean = new Attendance();
-            List<Attendance> attBeanList = loadBeanList(Constants.ATTENDANCE_CSV_SOURCE, attBean);
+            attBeanList = getAllBeans(Constants.ATTENDANCE_CSV_SOURCE, attBean);
             attBeanList.stream().forEach(bean -> log.info(bean));
-            log.trace("Reading complete");
+            log.debug("getAllAttendance[1]: Getting all Attendance complete");
         } catch (Exception e){
-            log.error("Reading attendance error");
-            log.error(e.getClass().getName() + ":" + e.getMessage());
-            return false;
+            log.error("getAllAttendance[0]: Getting all Attendance error");
+            log.error("getAllAttendance[1]: " + e.getClass().getName() + ":" + e.getMessage());
         }
-        return true;
+        return Optional.ofNullable(attBeanList);
     }
 
     @Override
-    public boolean getAllGroups() {
+    public Optional getAllGroups() {
+        List<Group> groupBeanList = null;
         try {
-            log.debug("Start getting Groups");
+            log.debug("getAllGroups[0]: Start getting all Group");
             Group groupBean= new Group();
-            List<Group> groupBeanList = loadBeanList(Constants.GROUP_CSV_SOURCE, groupBean);
+            groupBeanList = getAllBeans(Constants.GROUP_CSV_SOURCE, groupBean);
             groupBeanList.stream().forEach(bean -> log.info(bean));
-            log.trace("Reading complete");
+            log.debug("getAllGroups[1]: Getting all Group complete");
         } catch (Exception e){
-            log.error("Reading groups error");
-            log.error(e.getClass().getName() + ":" + e.getMessage());
-            return false;
+            log.error("getAllGroups[0]: Getting all Group error");
+            log.error("getAllGroups[1]: " + e.getClass().getName() + ":" + e.getMessage());
         }
-        return true;
+        return Optional.ofNullable(groupBeanList);
     }
 
     @Override
-    public boolean getAllParents() {
+    public Optional getAllParents() {
+        List<Parent> parentBeanList = null;
         try {
-            log.debug("Start getting Parents");
+            log.debug("getAllParents[0]: Start getting all Parent");
             Parent parentBean = new Parent();
-            List<Parent> parentBeanList = loadBeanList(Constants.PARENT_CSV_SOURCE, parentBean);
+            parentBeanList = getAllBeans(Constants.PARENT_CSV_SOURCE, parentBean);
             parentBeanList.stream().forEach(bean -> log.info(bean));
-            log.trace("Reading complete");
+            log.debug("getAllParents[1]: Getting all Parent complete");
         } catch (Exception e){
-            log.error("Reading parent error");
-            log.error(e.getClass().getName() + ":" + e.getMessage());
-            return false;
+            log.error("getAllParents[0]: Getting all Parent error");
+            log.error("getAllParents[1]: " + e.getClass().getName() + ":" + e.getMessage());
         }
-        return true;
+        return Optional.ofNullable(parentBeanList);
     }
 
     @Override
-    public boolean getAllStudents() {
+    public Optional getAllStudents() {
+        List<Student> studentBeanList = null;
         try {
-            log.debug("Start getting Students");
+            log.debug("getAllStudents[0]: Start getting all Student");
             Student studentBean = new Student();
-            List<Student> studentBeanList = loadBeanList(Constants.STUDENT_CSV_SOURCE, studentBean);
+            studentBeanList = getAllBeans(Constants.STUDENT_CSV_SOURCE, studentBean);
             studentBeanList.stream().forEach(bean -> log.info(bean));
-            log.trace("Reading complete");
+            log.debug("getAllStudents[1]: Getting all Student complete");
         } catch (Exception e){
-            log.error("Reading students error");
-            log.error(e.getClass().getName() + ":" + e.getMessage());
-            return false;
+            log.error("getAllStudents[0]: Getting all Student error");
+            log.error("getAllStudents[1]: " + e.getClass().getName() + ":" + e.getMessage());
         }
-        return true;
+        return Optional.ofNullable(studentBeanList);
     }
 
     @Override
-    public boolean getAllTeachers() {
+    public Optional getAllTeachers() {
+        List<Teacher> teacherBeanList = null;
         try {
-            log.debug("Start getting Teachers");
+            log.debug("getAllTeachers[0]: Start getting all Teacher");
             Teacher teacherBean = new Teacher();
-            List<Teacher> teacherBeanList = loadBeanList(Constants.TEACHER_CSV_SOURCE, teacherBean);
+            teacherBeanList = getAllBeans(Constants.TEACHER_CSV_SOURCE, teacherBean);
             teacherBeanList.stream().forEach(bean -> log.info(bean));
-            log.trace("Reading complete");
+            log.debug("getAllTeachers[1]: Getting all Teacher complete");
         } catch (Exception e){
-            log.error("Reading teachers error");
-            log.error(e.getClass().getName() + ":" + e.getMessage());
-            return false;
+            log.error("getAllTeachers[0]: Getting all Teacher error");
+            log.error("getAllTeachers[1]: " + e.getClass().getName() + ":" + e.getMessage());
         }
-        return true;
+        return Optional.ofNullable(teacherBeanList);
     }
 
     @Override
-    public boolean getAllAdmins() {
+    public Optional getAllAdmins() {
+        List<Admin> adminBeanList = null;
         try {
-            log.debug("Start getting Admins");
+            log.debug("getAllAdmins[0]: Start getting all Admin");
             Admin adminBean = new Admin();
-            List<Admin> adminBeanList = loadBeanList(Constants.ADMIN_CSV_SOURCE, adminBean);
+            adminBeanList = getAllBeans(Constants.ADMIN_CSV_SOURCE, adminBean);
             adminBeanList.stream().forEach(bean -> log.info(bean));
-            log.trace("Reading complete");
+            log.debug("getAllAdmins[1]: Getting all Admin complete");
         } catch (Exception e){
-            log.error("Reading admins error");
-            log.error(e.getClass().getName() + ":" + e.getMessage());
-            return false;
+            log.error("getAllAdmins[0]: Getting all Admin error");
+            log.error("getAllAdmins[1]: " + e.getClass().getName() + ":" + e.getMessage());
         }
-        return true;
+        return Optional.ofNullable(adminBeanList);
+    }
+
+    @Override
+    public Optional getAllUsers(){
+        List<User> userBeanList = null;
+        try {
+            log.debug("getAllUsers[0]: Start getting all User");
+            User userBean = new User();
+            userBeanList = getAllBeans(Constants.USER_CSV_SOURCE, userBean);
+            userBeanList.stream().forEach(bean -> log.info(bean));
+            log.debug("getAllUsers[1]: Getting all User complete");
+        } catch (Exception e){
+            log.error("getAllUsers[0]: Getting all User error");
+            log.error("getAllUsers[1]: " + e.getClass().getName() + ":" + e.getMessage());
+        }
+        return Optional.ofNullable(userBeanList);
     }
 
     @Override
     public boolean addAttendance(Attendance attendance) {
         try {
             if (attendance == null){
-                throw new Exception("Adding a null data");
+                throw new Exception("addAttendance[0]: Adding a null data");
             }
-            log.debug("Start adding attendance record");
+            log.debug("addAttendance[0]: Start adding attendance record");
             Attendance attBean = new Attendance();
-            List<Attendance> attBeanList = loadBeanList(Constants.ATTENDANCE_CSV_SOURCE, attBean);
+            List<Attendance> attBeanList = getAllBeans(Constants.ATTENDANCE_CSV_SOURCE, attBean);
             attBeanList.add(attendance);
-            log.trace("Adding attendance record complete");
-            saveFile(attBeanList);
-//            MongoChanges mongoInsert = new MongoChanges();
-//            mongoInsert.insertBeanIntoCollection(attendance);
-            writeToMongo("addAttendance", attendance);
+            log.debug("addAttendance[1]: Adding attendance record complete");
+            writeToMongo("addAttendance", attendance, saveFile(attBeanList));
         }
         catch(Exception e) {
-            log.error("Adding attendance error");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("addAttendance[0]: Adding Attendance error");
+            log.error("addAttendance[1]: " + e.getClass().getName() + ": " + e.getMessage());
             return false;
         }
         return true;
@@ -337,20 +365,18 @@ public class DataProviderCSV implements IDataProvider{
     public boolean addGroup(Group group) {
         try {
             if (group == null){
-                throw new Exception("Adding a null data");
+                throw new Exception("addGroup[0]: Adding a null data");
             }
-            log.debug("Start adding group record");
+            log.debug("addGroup[0]: Start adding group record");
             Group groupBean = new Group();
-            List<Group> groupBeanList = loadBeanList(Constants.GROUP_CSV_SOURCE, groupBean);
+            List<Group> groupBeanList = getAllBeans(Constants.GROUP_CSV_SOURCE, groupBean);
             groupBeanList.add(group);
-            log.trace("Adding group record complete");
-            saveFile(groupBeanList);
-//            MongoChanges mongoInsert = new MongoChanges();
-//            mongoInsert.insertBeanIntoCollection(group);
+            log.debug("addGroup[1]: Adding group record complete");
+            writeToMongo("addGroup", group, saveFile(groupBeanList));
         }
         catch(Exception e) {
-            log.error("Adding group error");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("addGroup[0]: Adding Group error");
+            log.error("addGroup[1]: " + e.getClass().getName() + ": " + e.getMessage());
             return false;
         }
         return true;
@@ -360,20 +386,18 @@ public class DataProviderCSV implements IDataProvider{
     public boolean addParent(Parent parent) {
         try {
             if (parent == null){
-                throw new Exception("Adding a null data");
+                throw new Exception("addParent[0]: Adding a null data");
             }
-            log.debug("Start adding parent record");
+            log.debug("addParent[0]: Start adding parent record");
             Parent parentBean = new Parent();
-            List<Parent> parentBeanList = loadBeanList(Constants.PARENT_CSV_SOURCE, parentBean);
+            List<Parent> parentBeanList = getAllBeans(Constants.PARENT_CSV_SOURCE, parentBean);
             parentBeanList.add(parent);
-            log.trace("Adding parent record complete");
-            saveFile(parentBeanList);
-//            MongoChanges mongo = new MongoChanges();
-//            mongo.insertBeanIntoCollection(parent);
+            log.debug("addParent[1]: Adding parent record complete");
+            writeToMongo("addParent", parent, saveFile(parentBeanList));
         }
         catch(Exception e) {
-            log.error("Adding parent error");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("addParent[0]: Adding Parent error");
+            log.error("addParent[1]: "  + e.getClass().getName() + ": " + e.getMessage());
             return false;
         }
         return true;
@@ -383,20 +407,18 @@ public class DataProviderCSV implements IDataProvider{
     public boolean addStudent(Student student) {
         try {
             if (student == null){
-                throw new Exception("Adding a null data");
+                throw new Exception("addStudent[0]: Adding a null data");
             }
-            log.debug("Start adding student record");
+            log.debug("addStudent[0]: Start adding student record");
             Student studentBean = new Student();
-            List<Student> studentBeanList = loadBeanList(Constants.STUDENT_CSV_SOURCE, studentBean);
+            List<Student> studentBeanList = getAllBeans(Constants.STUDENT_CSV_SOURCE, studentBean);
             studentBeanList.add(student);
-            log.trace("Adding student record complete");
-            saveFile(studentBeanList);
-//            MongoChanges mongoInsert = new MongoChanges();
-//            mongoInsert.insertBeanIntoCollection(student);
+            log.debug("addStudent[1]: Adding student record complete");
+            writeToMongo("addStudent", student, saveFile(studentBeanList));
         }
         catch(Exception e) {
-            log.error("Adding student error");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("addStudent[0]: Adding Student error");
+            log.error("addStudent[1]: " + e.getClass().getName() + ": " + e.getMessage());
             return false;
         }
         return true;
@@ -406,20 +428,18 @@ public class DataProviderCSV implements IDataProvider{
     public boolean addTeacher(Teacher teacher) {
         try {
             if (teacher == null){
-                throw new Exception("Adding a null data");
+                throw new Exception("addTeacher[0]: Adding a null data");
             }
-            log.debug("Start adding teacher record");
+            log.debug("addTeacher[0]: Start adding teacher record");
             Teacher teacherBean = new Teacher();
-            List<Teacher> teacherBeanList = loadBeanList(Constants.TEACHER_CSV_SOURCE, teacherBean);
+            List<Teacher> teacherBeanList = getAllBeans(Constants.TEACHER_CSV_SOURCE, teacherBean);
             teacherBeanList.add(teacher);
-            log.trace("Adding teacher record complete");
-            saveFile(teacherBeanList);
-//            MongoChanges mongoInsert = new MongoChanges();
-//            mongoInsert.insertBeanIntoCollection(teacher);
+            log.debug("addTeacher[1]: Adding Teacher complete");
+            writeToMongo("addTeacher", teacher, saveFile(teacherBeanList));
         }
         catch(Exception e) {
-            log.error("Adding teacher error");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("addTeacher[0]: Adding Teacher error");
+            log.error("addTeacher[1]: " + e.getClass().getName() + ": " + e.getMessage());
             return false;
         }
         return true;
@@ -429,20 +449,39 @@ public class DataProviderCSV implements IDataProvider{
     public boolean addAdmin(Admin admin) {
         try {
             if (admin == null){
-                throw new Exception("Adding a null data");
+                throw new Exception("addAdmin[0]: Adding a null data");
             }
-            log.debug("Start adding admin record");
+            log.debug("addAdmin[0]: Start adding admin record");
             Admin adminBean = new Admin();
-            List<Admin> adminBeanList = loadBeanList(Constants.ADMIN_CSV_SOURCE, adminBean);
+            List<Admin> adminBeanList = getAllBeans(Constants.ADMIN_CSV_SOURCE, adminBean);
             adminBeanList.add(admin);
-            log.trace("Adding record complete");
-            saveFile(adminBeanList);
-//            MongoChanges mongoInsert = new MongoChanges();
-//            mongoInsert.insertBeanIntoCollection(admin);
+            log.debug("addAdmin[1]: Adding Admin complete");
+            writeToMongo("addAdmin", admin, saveFile(adminBeanList));
         }
         catch(Exception e) {
-            log.error("Adding admin error");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("addAdmin[0]: Adding Admin error");
+            log.error("addAdmin[1]: " + e.getClass().getName() + ": " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean addUser(User user){
+        try {
+            if (user == null){
+                throw new Exception("addUser[0]: Adding a null data");
+            }
+            log.debug("addUser[0]: Start adding User record");
+            User userBean = new User();
+            List<User> userBeanList = getAllBeans(Constants.USER_CSV_SOURCE, userBean);
+            userBeanList.add(user);
+            log.debug("addUser[1]: Adding User complete");
+            writeToMongo("addUser", user, saveFile(userBeanList));
+        }
+        catch(Exception e) {
+            log.error("addUser[0]: Adding User error");
+            log.error("addUser[1]: " + e.getClass().getName() + ": " + e.getMessage());
             return false;
         }
         return true;
@@ -451,19 +490,20 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean deleteAttendance(long id) {
         try {
-            log.info("Start deleting record");
+            log.debug("deleteAttendance[0]: Start deleting Attendance");
             Attendance attendanceBean = new Attendance();
-            List<Attendance> attendanceBeanList = loadBeanList(Constants.ATTENDANCE_CSV_SOURCE, attendanceBean);
-            log.info("Searching required record");
+            List<Attendance> attendanceBeanList = getAllBeans(Constants.ATTENDANCE_CSV_SOURCE, attendanceBean);
+            log.debug("deleteAttendance[1]: Searching required record");
             Predicate<Attendance> isDeletable = attendance -> attendance.getId() == id;
-            log.info("Removing required record");
+            log.debug("deleteAttendance[2]: Removing required record");
+            attendanceBean = (Attendance) getAttendanceById(id).get();
             if (!attendanceBeanList.removeIf(isDeletable)) throw new Exception("Trying to delete non-existent record");
-            log.info("Saving file after delete");
-            saveFile(attendanceBeanList);
+            log.debug("deleteAttendance[1]: Saving file after delete");
+            writeToMongo("deleteAttendance", attendanceBean, saveFile(attendanceBeanList));
         }
         catch(Exception e) {
-            log.error("Deleting Attendance Error");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("deleteAttendance[0]: Deleting Attendance Error");
+            log.error("deleteAttendance[1]: " + e.getClass().getName() + ": " + e.getMessage());
             return false;
         }
         return true;
@@ -472,19 +512,20 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean deleteGroup(long id) {
         try {
-            log.info("Start deleting record");
+            log.debug("deleteGroup[0]: Start deleting Group");
             Group groupBean = new Group();
-            List<Group> groupBeanList = loadBeanList(Constants.GROUP_CSV_SOURCE, groupBean);
-            log.info("Searching required record");
+            List<Group> groupBeanList = getAllBeans(Constants.GROUP_CSV_SOURCE, groupBean);
+            log.debug("deleteGroup[1]: Searching required record");
             Predicate<Group> isDeletable = group -> group.getId() == id;
-            log.info("Removing required record");
+            log.debug("deleteGroup[2]: Removing required record");
+            groupBean = (Group) getGroupById(id).get();
             if (!groupBeanList.removeIf(isDeletable)) throw new Exception("Trying to delete non-existent record");
-            log.info("Saving file after delete");
-            saveFile(groupBeanList);
+            log.debug("deleteGroup[1]: Saving file after delete");
+            writeToMongo("deleteGroup", groupBean, saveFile(groupBeanList));
         }
         catch(Exception e) {
-            log.error("Deleting Group Error");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("deleteGroup[0]: Deleting Group Error");
+            log.error("deleteGroup[1]: " + e.getClass().getName() + ": " + e.getMessage());
             return false;
         }
         return true;
@@ -493,19 +534,20 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean deleteParent(long id) {
         try {
-            log.info("Start deleting record");
+            log.debug("deleteParent[0]: Start deleting Parent");
             Parent parentBean = new Parent();
-            List<Parent> parentBeanList = loadBeanList(Constants.PARENT_CSV_SOURCE, parentBean);
-            log.info("Searching required record");
+            List<Parent> parentBeanList = getAllBeans(Constants.PARENT_CSV_SOURCE, parentBean);
+            log.debug("deleteParent[1]: Searching Parent record");
             Predicate<Parent> isDeletable = parent -> parent.getId() == id;
-            log.info("Removing required record");
+            log.debug("deleteParent[2]: Removing Parent record");
+            parentBean = (Parent) getParentById(id).get();
             if (!parentBeanList.removeIf(isDeletable)) throw new Exception("Trying to delete non-existent record");
-            log.info("Saving file after delete");
-            saveFile(parentBeanList);
+            log.debug("deleteParent[1]: Saving file after delete");
+            writeToMongo("deleteParent", parentBean, saveFile(parentBeanList));
         }
         catch(Exception e) {
-            log.error("Deleting Parent Error");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("deleteParent[0]: Deleting Parent Error");
+            log.error("deleteParent[1]: " + e.getClass().getName() + ": " + e.getMessage());
             return false;
         }
         return true;
@@ -514,19 +556,20 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean deleteStudent(long id) {
         try {
-            log.info("Start deleting record");
+            log.debug("deleteStudent[0]: Start deleting Student");
             Student studentBean = new Student();
-            List<Student> studentBeanList = loadBeanList(Constants.STUDENT_CSV_SOURCE, studentBean);
-            log.info("Searching required record");
+            List<Student> studentBeanList = getAllBeans(Constants.STUDENT_CSV_SOURCE, studentBean);
+            log.debug("deleteStudent[1]: Searching Student record");
             Predicate<Student> isDeletable = student -> student.getId() == id;
-            log.info("Removing required record");
+            log.debug("deleteStudent[2]: Removing Student record");
+            studentBean = (Student) getStudentById(id).get();
             if (!studentBeanList.removeIf(isDeletable)) throw new Exception("Trying to delete non-existent record");
-            log.info("Saving file after delete");
-            saveFile(studentBeanList);
+            log.debug("deleteStudent[1]: Saving file after delete");
+            writeToMongo("deleteStudent", studentBean, saveFile(studentBeanList));
         }
         catch(Exception e) {
-            log.error("Deleting Student Error");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("deleteStudent[0]: Deleting Student Error");
+            log.error("deleteStudent[1]: " + e.getClass().getName() + ": " + e.getMessage());
             return false;
         }
         return true;
@@ -535,19 +578,20 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean deleteTeacher(long id) {
         try {
-            log.info("Start deleting record");
+            log.debug("deleteTeacher[0]: Start deleting Teacher");
             Teacher teacherBean = new Teacher();
-            List<Teacher> teacherBeanList = loadBeanList(Constants.TEACHER_CSV_SOURCE, teacherBean);
-            log.info("Searching required record");
+            List<Teacher> teacherBeanList = getAllBeans(Constants.TEACHER_CSV_SOURCE, teacherBean);
+            log.debug("deleteTeacher[1]: Searching Teacher record");
             Predicate<Teacher> isDeletable = teacher -> teacher.getId() == id;
-            log.info("Removing required record");
+            log.debug("deleteTeacher[2]: Removing Teacher record");
+            teacherBean = (Teacher) getTeacherById(id).get();
             if (!teacherBeanList.removeIf(isDeletable)) throw new Exception("Trying to delete non-existent record");
-            log.info("Saving file after delete");
-            saveFile(teacherBeanList);
+            log.debug("deleteTeacher[1]: Saving file after delete");
+            writeToMongo("deleteTeacher", teacherBean, saveFile(teacherBeanList));
         }
         catch(Exception e) {
-            log.error("Deleting Teacher Error");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("deleteTeacher[0]: Deleting Teacher Error");
+            log.error("deleteTeacher[1]: " + e.getClass().getName() + ": " + e.getMessage());
             return false;
         }
         return true;
@@ -556,19 +600,42 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean deleteAdmin(long id) {
         try {
-            log.info("Start deleting record");
+            log.debug("deleteAdmin[0]: Start deleting record");
             Admin adminBean = new Admin();
-            List<Admin> adminBeanList = loadBeanList(Constants.ADMIN_CSV_SOURCE, adminBean);
-            log.info("Searching required record");
+            List<Admin> adminBeanList = getAllBeans(Constants.ADMIN_CSV_SOURCE, adminBean);
+            log.debug("deleteAdmin[1]: Searching Admin record");
             Predicate<Admin> isDeletable = admin -> admin.getId() == id;
-            log.info("Removing required record");
+            log.debug("deleteAdmin[2]: Removing Admin record");
+            adminBean = (Admin) getAdminById(id).get();
             if (!adminBeanList.removeIf(isDeletable)) throw new Exception("Trying to delete non-existent record");
-            log.info("Saving file after delete");
-            saveFile(adminBeanList);
+            log.debug("deleteAdmin[1]: Saving file after delete");
+            writeToMongo("deleteAdmin", adminBean, saveFile(adminBeanList));
         }
         catch(Exception e) {
-            log.error("Deleting Admin Error");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("deleteAdmin[0]: Deleting Admin Error");
+            log.error("deleteAdmin[1]: " + e.getClass().getName() + ": " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean deleteUser(long id){
+        try {
+            log.debug("deleteUser[0]: Start deleting User");
+            User userBean = new User();
+            List<User> userBeanList = getAllBeans(Constants.USER_CSV_SOURCE, userBean);
+            log.debug("deleteUser[1]: Searching User record");
+            Predicate<User> isDeletable = user -> user.getId() == id;
+            log.debug("deleteUser[2]: Removing User record");
+            userBean = (User) getUserById(id).get();
+            if (!userBeanList.removeIf(isDeletable)) throw new Exception("Trying to delete non-existent record");
+            log.debug("deleteUser[1]: Saving file after delete");
+            writeToMongo("deleteUser", userBean, saveFile(userBeanList));
+        }
+        catch(Exception e) {
+            log.error("deleteUser[0]: Deleting User Error");
+            log.error("deleteUser[1]: " + e.getClass().getName() + ": " + e.getMessage());
             return false;
         }
         return true;
@@ -577,21 +644,19 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean updateAttendance(long id, Attendance attendance) {
         try {
-            log.info("Start updating attendance record: reading file");
+            log.debug("updateAttendance[0]: Start updating attendance");
             Attendance attBean = new Attendance();
-            List<Attendance> attBeanList = loadBeanList(Constants.ATTENDANCE_CSV_SOURCE, attBean);
-            log.info("Searching required record: searching id");
+            List<Attendance> attBeanList = getAllBeans(Constants.ATTENDANCE_CSV_SOURCE, attBean);
+            log.debug("updateAttendance[1]: Searching Attendance by id");
             int index = attBeanList.indexOf(getAttendanceById(id).get());
-            log.info("Insert new values");
+            log.debug("updateAttendance[2]: Insert new values");
             attBeanList.set(index, attendance);
-            saveFile(attBeanList);
-//            MongoChanges mongoInsert = new MongoChanges();
-//            mongoInsert.insertBeanIntoCollection(getAttendanceById(id).get());
-            log.info("Updating complete");
+            writeToMongo("updateAttendance", attendance, saveFile(attBeanList));
+            log.debug("updateAttendance[1]: Updating Attendance complete");
         }
         catch(Exception e) {
-            log.error("Updating Attendance Error");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("updateAttendance[0]: Updating Attendance Error");
+            log.error("updateAttendance[1]: " + e.getClass().getName() + ": " + e.getMessage());
             return false;
         }
         return true;
@@ -600,21 +665,19 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean updateGroup(long id, Group group) {
         try {
-            log.info("Start updating group record: reading file");
+            log.debug("updateGroup[0]: Start updating Group");
             Group groupBean = new Group();
-            List<Group> groupBeanList = loadBeanList(Constants.GROUP_CSV_SOURCE, groupBean);
-            log.info("Searching required record: searching id");
+            List<Group> groupBeanList = getAllBeans(Constants.GROUP_CSV_SOURCE, groupBean);
+            log.debug("updateGroup[1]: Searching Group by id");
             int index = groupBeanList.indexOf(getGroupById(id).get());
-            log.info("Insert new values");
+            log.debug("updateGroup[0]: Insert new values");
             groupBeanList.set(index, group);
-            saveFile(groupBeanList);
-//            MongoChanges mongoInsert = new MongoChanges();
-//            mongoInsert.insertBeanIntoCollection(getGroupById(id).get());
-            log.info("Updating complete");
+            writeToMongo("updateGroup", group, saveFile(groupBeanList));
+            log.debug("updateGroup[1]: Updating Group complete");
         }
         catch(Exception e) {
-            log.error("Updating Group Error");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("updateGroup[0]: Updating Group Error");
+            log.error("updateGroup[1]: " + e.getClass().getName() + ": " + e.getMessage());
             return false;
         }
         return true;
@@ -623,22 +686,19 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean updateParent(long id, Parent parent) {
         try {
-            log.info("Start updating parent record: reading file");
+            log.debug("updateParent[0]: Start updating Parent ");
             Parent parentBean = new Parent();
-            List<Parent> parentBeanList = loadBeanList(Constants.PARENT_CSV_SOURCE, parentBean);
-            log.info("Searching required record: searching id");
+            List<Parent> parentBeanList = getAllBeans(Constants.PARENT_CSV_SOURCE, parentBean);
+            log.debug("updateParent[1]: Searching Parent by id");
             int index = parentBeanList.indexOf(getParentById(id).get());
-            log.debug("parent index = " + index);
-            log.info("Insert new values");
+            log.debug("updateParent[2]: Insert new values");
             parentBeanList.set(index, parent);
-            saveFile(parentBeanList);
-//            MongoChanges mongoInsert = new MongoChanges();
-//            mongoInsert.insertBeanIntoCollection(getParentById(id).get());
-            log.info("Updating complete");
+            writeToMongo("updateParent", parent, saveFile(parentBeanList));
+            log.debug("updateParent[1]: Updating Parent complete");
         }
         catch(Exception e) {
-            log.error("Updating Parent Error");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("updateParent[0]: Updating Parent Error");
+            log.error("updateParent[0]: " + e.getClass().getName() + ": " + e.getMessage());
             return false;
         }
         return true;
@@ -647,21 +707,19 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean updateStudent(long id, Student student) {
         try {
-            log.info("Start updating student record: reading file");
+            log.debug("updateStudent[0]: Start updating Student");
             Student studentBean = new Student();
-            List<Student> studentBeanList = loadBeanList(Constants.STUDENT_CSV_SOURCE, studentBean);
-            log.info("Searching required record: searching id");
+            List<Student> studentBeanList = getAllBeans(Constants.STUDENT_CSV_SOURCE, studentBean);
+            log.debug("updateStudent[1]: Searching Student by id");
             int index = studentBeanList.indexOf(getStudentById(id).get());
-            log.info("Insert new values");
+            log.debug("updateStudent[2]: Inserting new values");
             studentBeanList.set(index, student);
-            saveFile(studentBeanList);
-//            MongoChanges mongoInsert = new MongoChanges();
-//            mongoInsert.insertBeanIntoCollection(getStudentById(id).get());
-            log.info("Updating complete");
+            writeToMongo("updateStudent", student, saveFile(studentBeanList));
+            log.debug("updateStudent[1]: Updating Student complete");
         }
         catch(Exception e) {
-            log.error("Updating Student Error");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("updateStudent[0]: Updating Student Error");
+            log.error("updateStudent[1]: " + e.getClass().getName() + ": " + e.getMessage());
             return false;
         }
         return true;
@@ -670,21 +728,19 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean updateTeacher(long id, Teacher teacher) {
         try {
-            log.info("Start updating teacher record: reading file");
+            log.debug("updateTeacher[0]: Start updating Teacher");
             Teacher teacherBean = new Teacher();
-            List<Teacher> teacherBeanList = loadBeanList(Constants.TEACHER_CSV_SOURCE, teacherBean);
-            log.info("Searching required record: searching id");
+            List<Teacher> teacherBeanList = getAllBeans(Constants.TEACHER_CSV_SOURCE, teacherBean);
+            log.debug("updateTeacher[1]: Searching Teacher by id");
             int index = teacherBeanList.indexOf(getTeacherById(id).get());
-            log.info("Insert new values");
+            log.debug("updateTeacher[2]: Inserting new values");
             teacherBeanList.set(index, teacher);
-            saveFile(teacherBeanList);
-//            MongoChanges mongoInsert = new MongoChanges();
-//            mongoInsert.insertBeanIntoCollection(getTeacherById(id).get());
-            log.info("Updating complete");
+            writeToMongo("updateTeacher", teacher, saveFile(teacherBeanList));
+            log.debug("updateTeacher[1]: Updating Teacher complete");
         }
         catch(Exception e) {
-            log.error("Updating Teacher Error");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("updateTeacher[0]: Updating Teacher Error");
+            log.error("updateTeacher[1]: " + e.getClass().getName() + ": " + e.getMessage());
             return false;
         }
         return true;
@@ -693,22 +749,40 @@ public class DataProviderCSV implements IDataProvider{
     @Override
     public boolean updateAdmin(long id, Admin admin) {
         try {
-            log.info("Start updating admin record: reading file");
+            log.debug("updateAdmin[0]: Start updating Admin");
             Admin adminBean = new Admin();
-            List<Admin> adminBeanList = loadBeanList(Constants.ADMIN_CSV_SOURCE, adminBean);
-            log.info("Searching required record: searching id");
+            List<Admin> adminBeanList = getAllBeans(Constants.ADMIN_CSV_SOURCE, adminBean);
+            log.debug("updateAdmin[1]: Searching Admin by id");
             int index = adminBeanList.indexOf(getAdminById(id).get());
-            log.info("Insert new values");
+            log.debug("updateAdmin[2]: Inserting new values");
             adminBeanList.set(index, admin);
-            saveFile(adminBeanList);
-//            MongoChanges mongoInsert = new MongoChanges();
-//            mongoInsert.insertBeanIntoCollection(getAdminById(id).get());
-            writeToMongo("updateAdmin", adminBean);
-            log.info("Updating complete");
+            writeToMongo("updateAdmin", admin, saveFile(adminBeanList));
+            log.debug("updateAdmin[1]: Updating Admin complete");
         }
         catch(Exception e) {
-            log.error("Updating Admin Error");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("updateAdmin[0]: Updating Admin Error");
+            log.error("updateAdmin[1]: " + e.getClass().getName() + ": " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean updateUser(long id, User user){
+        try {
+            log.debug("updateUser[0]: Start updating User");
+            User userBean = new User();
+            List<User> userBeanList = getAllBeans(Constants.USER_CSV_SOURCE, userBean);
+            log.debug("updateUser[1]: Searching User record by Id");
+            int index = userBeanList.indexOf(getUserById(id).get());
+            log.debug("updateUser[2]: Inserting new values");
+            userBeanList.set(index, user);
+            writeToMongo("updateUser", user, saveFile(userBeanList));
+            log.debug("updateUser[1]: Updating User complete");
+        }
+        catch(Exception e) {
+            log.error("updateUser[0]: Updating User Error");
+            log.error("updateUser[1]: " + e.getClass().getName() + ": " + e.getMessage());
             return false;
         }
         return true;
@@ -718,15 +792,15 @@ public class DataProviderCSV implements IDataProvider{
     public Optional getAttendanceById(long id) {
         Attendance attBean = new Attendance();
         try {
-            log.info("Start receiving student record by id");
-            attBean = loadBeanList(Constants.ATTENDANCE_CSV_SOURCE, attBean).stream()
+            log.debug("getAttendanceById[0]: Start getting Attendance by id");
+            attBean = getAllBeans(Constants.ATTENDANCE_CSV_SOURCE, attBean).stream()
                     .filter(bean-> ((Attendance) bean).getId() == id)
                     .findAny().get();
-            log.info("Receiving record complete");
+            log.debug("getAttendanceById[1]: Getting Attendance complete");
         }
         catch(Exception e) {
-            log.error("Receiving attendance by id Error ");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("getAttendanceById[0]: Getting Attendance by id Error ");
+            log.error("getAttendanceById[1]: " + e.getClass().getName() + ": " + e.getMessage());
         }
         return Optional.of(attBean);
     }
@@ -735,15 +809,15 @@ public class DataProviderCSV implements IDataProvider{
     public Optional getGroupById(long id) {
         Group groupBean = new Group();
         try {
-            log.info("Start receiving student record by id");
-            groupBean = loadBeanList(Constants.GROUP_CSV_SOURCE, groupBean).stream()
+            log.debug("getGroupById[0]: Start getting Group by id");
+            groupBean = getAllBeans(Constants.GROUP_CSV_SOURCE, groupBean).stream()
                     .filter(bean-> ((Group) bean).getId() == id)
                     .findAny().get();
-            log.info("Receiving record complete");
+            log.debug("getGroupById[1]: Getting Group complete");
         }
         catch(Exception e) {
-            log.error("Receiving group by id Error ");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("getGroupById[0]: Getting Group by id Error ");
+            log.error("getGroupById[1]: " + e.getClass().getName() + ": " + e.getMessage());
         }
         return Optional.of(groupBean);
     }
@@ -752,15 +826,15 @@ public class DataProviderCSV implements IDataProvider{
     public Optional getParentById(long id) {
         Parent parentBean = new Parent();
         try {
-            log.info("Start receiving parent record by id");
-            parentBean = loadBeanList(Constants.PARENT_CSV_SOURCE, parentBean).stream()
+            log.debug("getParentById[0]: Start getting Parent by id");
+            parentBean = getAllBeans(Constants.PARENT_CSV_SOURCE, parentBean).stream()
                     .filter(bean-> ((Parent) bean).getId() == id)
                     .findAny().get();
-            log.info("Receiving record complete");
+            log.debug("getParentById[1]: Getting Parent complete");
         }
         catch(Exception e) {
-            log.error("Receiving parent by id Error ");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("getParentById[0]: Getting Parent by id Error ");
+            log.error("getParentById[1]: " + e.getClass().getName() + ": " + e.getMessage());
         }
         return Optional.of(parentBean);
     }
@@ -769,15 +843,15 @@ public class DataProviderCSV implements IDataProvider{
     public Optional getStudentById(long id) {
         Student studentBean = new Student();
         try {
-            log.info("Start receiving student record by id");
-            studentBean = loadBeanList(Constants.STUDENT_CSV_SOURCE, studentBean).stream()
+            log.debug("getStudentById[0]: Start getting Student by id");
+            studentBean = getAllBeans(Constants.STUDENT_CSV_SOURCE, studentBean).stream()
                     .filter(bean-> ((Student) bean).getId() == id)
                     .findAny().get();
-            log.info("Receiving record complete");
+            log.debug("getStudentById[1]: Receiving record complete");
         }
         catch(Exception e) {
-            log.error("Receiving student by id Error ");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("getStudentById[0]: Getting Student by id Error ");
+            log.error("getStudentById[1]: " + e.getClass().getName() + ": " + e.getMessage());
         }
         return Optional.of(studentBean);
     }
@@ -786,15 +860,15 @@ public class DataProviderCSV implements IDataProvider{
     public Optional getTeacherById(long id) {
         Teacher teacherBean = new Teacher();
         try {
-            log.info("Start receiving teacher record by id");
-            teacherBean = loadBeanList(Constants.TEACHER_CSV_SOURCE, teacherBean).stream()
+            log.debug("getTeacherById[0]: Start getting Teacher by id");
+            teacherBean = getAllBeans(Constants.TEACHER_CSV_SOURCE, teacherBean).stream()
                     .filter(bean-> ((Teacher) bean).getId() == id)
                     .findAny().get();
-            log.info("Receiving record complete");
+            log.debug("getTeacherById[1]: Getting Teacher complete");
         }
         catch(Exception e) {
-            log.error("Receiving teacher by id Error ");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("getTeacherById[0]: Getting Teacher by id Error ");
+            log.error("getTeacherById[1]: " + e.getClass().getName() + ": " + e.getMessage());
         }
         return Optional.of(teacherBean);
     }
@@ -803,70 +877,110 @@ public class DataProviderCSV implements IDataProvider{
     public Optional getAdminById(long id) {
         Admin adminBean = new Admin();
         try {
-            log.info("Start receiving admin record by id");
-            adminBean = loadBeanList(Constants.ADMIN_CSV_SOURCE, adminBean).stream()
+            log.debug("getAdminById[0]: Start getting Admin by id");
+            adminBean = getAllBeans(Constants.ADMIN_CSV_SOURCE, adminBean).stream()
                     .filter(bean-> ((Admin) bean).getId() == id)
                     .findAny().get();
-            log.info("Receiving record complete");
+            log.debug("getAdminById[1]: Getting Admin complete");
         }
         catch(Exception e) {
-            log.error("Receiving admin by id Error ");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("getAdminById[0]: Getting Admin by id Error ");
+            log.error("getAdminById[1]: " + e.getClass().getName() + ": " + e.getMessage());
         }
         return Optional.of(adminBean);
     }
 
-    private <T> boolean saveFile(List<T> beanList)  {
+    @Override
+    public Optional getUserById(long id){
+        User userBean = new User();
         try {
-            log.info("Saving file: initializing file writer");
-            log.info(findPath(beanList));
-            FileWriter sw = new FileWriter(ConfigurationUtil.getConfigurationEntry(findPath(beanList)));
-            log.info("Initializing CSVWriter");
-            CSVWriter writer = new CSVWriter(sw);
-            log.info("Initializing BeanToCsv object");
-            StatefulBeanToCsv<T> beanToCsv = new StatefulBeanToCsvBuilder<T>(writer).build();
-            log.info("Writing beanList into file");
-            beanToCsv.write(beanList);
-            log.info("Writing complete");
-            writer.close();
+            log.debug("getUserById[0]: Start getting User by id");
+            userBean = getAllBeans(Constants.USER_CSV_SOURCE, userBean).stream()
+                    .filter(bean-> ((User) bean).getId() == id)
+                    .findAny().get();
+            log.debug("getUserById[1]: Getting User complete");
         }
         catch(Exception e) {
-            log.error("Saving file error ");
-            log.info(e.getClass().getName() + ": " + e.getMessage());
+            log.error("getUserById[0]: Getting User by id Error ");
+            log.error("getUserById[1]: " + e.getClass().getName() + ": " + e.getMessage());
+        }
+        return Optional.of(userBean);
+    }
+
+    private <T> boolean saveFile(List<T> beanList)  {
+        try {
+            log.debug("saveFile[0]: Start saving file");
+            log.debug("saveFile[0]: Getting file");
+            FileWriter sw = new FileWriter(ConfigurationUtil.getConfigurationEntry(findPath(beanList)));
+            log.debug("saveFile[1]: Initializing CSVWriter");
+            CSVWriter writer = new CSVWriter(sw);
+            log.debug("saveFile[1]: Initializing BeanToCsv object");
+            StatefulBeanToCsv<T> beanToCsv = new StatefulBeanToCsvBuilder<T>(writer).build();
+            log.debug("saveFile[2]: Writing beanList into file");
+            beanToCsv.write(beanList);
+            writer.close();
+            log.debug("saveFile[1]: Saving file complete");
+        }
+        catch(Exception e) {
+            log.error("saveFile[0]: Saving file error ");
+            log.info("saveFile[1]: " + e.getClass().getName() + ": " + e.getMessage());
             return false;
         }
-        log.info("File Saved");
         return true;
     }
 
-    private <T> List<T> loadBeanList(String path, T bean) {
-        List<T> loadedBeanList = null;
+    private <T> List<T> getAllBeans(String path, T bean) {
+        List<T> beanList = new ArrayList<>();
         try {
-            log.info("Reading file");
-            loadedBeanList = new CsvToBeanBuilder(new FileReader(ConfigurationUtil
-                    .getConfigurationEntry(path)))
+            log.debug("getAllBeans[0]: Start getting beans");
+            beanList = new CsvToBeanBuilder(new FileReader(getFile(path)))
                     .withType(bean.getClass())
                     .build()
                     .parse();
-            log.info("Beans loaded successfully");
+            log.debug("getAllBeans[1]: Getting beans complete");
         }
         catch(Exception e){
-            log.error("Beans loading Error");
-            log.error(e.getClass().getName() + ": " + e.getMessage());
+            log.error("getAllBeans[0]: Getting beans Error");
+            log.error("getAllBeans[1]: " + e.getClass().getName() + ": " + e.getMessage());
         }
 
-        return loadedBeanList;
+        return beanList;
     }
 
-    private <T> boolean writeToMongo(String methodName, T bean) throws IOException {
-        HistoryContent changedBean = new HistoryContent();
-        changedBean.setActor("system");
-        changedBean.setClassName(bean.getClass().getSimpleName());
-        changedBean.setCreatedDate(LocalDateTime.now().toString());
-        changedBean.setObject(bean);
-        changedBean.setMethodName(methodName);
-        MongoChanges mngdb = new MongoChanges();
-        mngdb.insertBeanIntoCollection(changedBean);
+    private File getFile(String path) throws IOException {
+        log.debug("getFile[0]: Start getting file");
+        File file = new File(ConfigurationUtil.getConfigurationEntry(path));
+        Optional.of(!file.exists()).ifPresent(f->{
+            try {
+                log.debug("getFile[0]: Creating non-existent file");
+                file.createNewFile();
+                saveFile(new ArrayList<>());
+            } catch (IOException e) {
+                log.error("getFile[1]: Creating non-existent file error");
+                e.printStackTrace();
+            }
+        });
+
+        log.debug("getFile[1]: Getting file complete");
+        return file;
+    }
+
+    private <T> boolean writeToMongo(String methodName, T bean, boolean isSuccessful) throws IOException {
+        try{
+            HistoryContent changedBean = new HistoryContent();
+            changedBean.setActor("system");
+            changedBean.setClassName(bean.getClass().getSimpleName());
+            changedBean.setCreatedDate(LocalDateTime.now().toString());
+            changedBean.setObject(bean);
+            changedBean.setMethodName(methodName);
+            changedBean.setIsSuccessful(isSuccessful);
+            MongoChanges mngdb = new MongoChanges();
+            mngdb.insertBeanIntoCollection(changedBean);
+        } catch(Exception e){
+            log.error("writeToMongo[0]: Writing to Mongo Error");
+            log.error(e.getClass().getName() + ": " + e.getMessage());
+            return false;
+        }
         return true;
     }
 
@@ -884,8 +998,44 @@ public class DataProviderCSV implements IDataProvider{
                 return Constants.TEACHER_CSV_SOURCE;
             case "Admin":
                 return Constants.ADMIN_CSV_SOURCE;
+            case "User":
+                return Constants.USER_CSV_SOURCE;
 
             default: return Constants.UNKNOWN_SOURCE_CSV;
         }
+    }
+
+
+    public boolean cleanAllFiles() {
+        log.debug("cleanAllFile[0]: Starting cleaning all CSV files");
+        try{
+            List<String> filesList = new ArrayList<>();
+            filesList.add(ConfigurationUtil.getConfigurationEntry(Constants.GROUP_CSV_SOURCE));
+            filesList.add(ConfigurationUtil.getConfigurationEntry(Constants.STUDENT_CSV_SOURCE));
+            filesList.add(ConfigurationUtil.getConfigurationEntry(Constants.PARENT_CSV_SOURCE));
+            filesList.add(ConfigurationUtil.getConfigurationEntry(Constants.USER_CSV_SOURCE));
+            filesList.add(ConfigurationUtil.getConfigurationEntry(Constants.ADMIN_CSV_SOURCE));
+            filesList.add(ConfigurationUtil.getConfigurationEntry(Constants.TEACHER_CSV_SOURCE));
+            filesList.add(ConfigurationUtil.getConfigurationEntry(Constants.ATTENDANCE_CSV_SOURCE));
+            filesList.forEach(file ->{
+                try {
+                    FileWriter fileWriter = new FileWriter(file);
+                    BufferedWriter bw = new BufferedWriter(fileWriter);
+                    bw.write("");
+                    bw.close();
+                    log.info("cleanAllFiles[1]: File " + file + " cleaning completed" );
+                } catch (Exception e) {
+                    log.error("cleanAllFiles[1]: File " + file + " cleaning error");
+                    log.error("cleaningAllFiles[2]: " + e.getMessage());
+                }
+            });
+            log.debug("cleanAllFiles[1]: Cleaning of all CSV files completed");
+        }
+        catch(Exception e){
+            log.error("cleanAllFile[0]: Cleaning all CSV files error");
+            log.error("cleanAllFile[1]: " + e.getClass().getName() + ": " + e.getMessage());
+            return false;
+        }
+        return true;
     }
 }

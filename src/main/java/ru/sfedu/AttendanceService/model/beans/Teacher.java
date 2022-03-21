@@ -1,6 +1,7 @@
 package ru.sfedu.AttendanceService.model.beans;
 
 import com.opencsv.bean.CsvBindByName;
+import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 
 import java.util.List;
@@ -10,6 +11,20 @@ public class Teacher extends User{
     @ElementList(inline = true, required = false)
     @CsvBindByName
     private List<Long> groupsId;
+
+    @Element
+    @CsvBindByName
+    private String subject;
+
+    public Teacher() {
+    }
+
+    public Teacher(User user, List<Long> groupsId, String subject) {
+        this.setId(user.getId());
+        this.setName(user.getName());
+        this.groupsId = groupsId;
+        this.subject = subject;
+    }
 
     public List<Long> getGroupsId() {
         return groupsId;

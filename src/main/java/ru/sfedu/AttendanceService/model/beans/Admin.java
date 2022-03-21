@@ -10,6 +10,20 @@ public class Admin extends User{
     @CsvBindByName
     private String position;
 
+    @Element
+    @CsvBindByName
+    private String education;
+
+    public Admin() {
+    }
+
+    public Admin(User user, String position, String education) {
+        this.setId(user.getId());
+        this.setName(user.getName());
+        this.position = position;
+        this.education = education;
+    }
+
     public String getPosition() {
         return position;
     }

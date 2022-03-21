@@ -1,0 +1,200 @@
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/group.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/student.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/parent.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/admin.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/admin.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/teacher.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/attendance.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/group.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/student.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/parent.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/admin.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/admin.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/teacher.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/attendance.xml cleaning completed
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:918 - getAllBeans[0]: XML loading Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:919 - getAllBeans[1]: org.simpleframework.xml.core.PersistenceException: Constructor not matched for class java.time.LocalDate
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:918 - getAllBeans[0]: XML loading Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:919 - getAllBeans[1]: org.simpleframework.xml.core.PersistenceException: Constructor not matched for class java.time.LocalDate
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/group.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/student.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/parent.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/admin.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/admin.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/teacher.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/attendance.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/group.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/student.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/parent.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/admin.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/admin.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/teacher.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/attendance.xml cleaning completed
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:918 - getAllBeans[0]: XML loading Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:919 - getAllBeans[1]: org.simpleframework.xml.core.PersistenceException: Constructor not matched for class java.time.LocalDate
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:918 - getAllBeans[0]: XML loading Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:919 - getAllBeans[1]: org.simpleframework.xml.core.PersistenceException: Constructor not matched for class java.time.LocalDate
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/group.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/student.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/parent.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/admin.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/admin.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/teacher.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/attendance.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/group.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/student.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/parent.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/admin.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/admin.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/teacher.xml cleaning completed
+03.13 15.40.12  INFO	ru.sfedu.AttendanceService.Main:999 - cleanAllFiles[1]: File ./src/main/resources/xml/attendance.xml cleaning completed
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:954 - writeToMongo[0]: Writing to Mongo Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:955 - com.mongodb.MongoTimeoutException: Timed out after 10 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: В соединении отказано (Connection refused)}}]
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:893 - saveFile[0]: XML writing file Error
+03.13 15.40.12 ERROR	ru.sfedu.AttendanceService.Main:894 - saveFile[1]: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0

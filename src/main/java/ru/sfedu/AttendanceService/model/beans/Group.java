@@ -24,6 +24,12 @@ public class Group implements Serializable {
         this.id = 0L;
     }
 
+    public Group(long id, String name, List<Long> studentsId) {
+        this.id = id;
+        this.name = name;
+        this.studentsId = studentsId;
+    }
+
     public long getId() {
         return id;
     }

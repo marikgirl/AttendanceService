@@ -5,15 +5,10 @@ public class HistoryContent {
     private String createdDate;
     private String actor;
     private String methodName;
+    private boolean isSuccessful;
     private Object object;
 
     public HistoryContent() {
-    }
-
-    public HistoryContent(String className, String createdDate, String actor) {
-        this.className = className;
-        this.createdDate = createdDate;
-        this.actor = actor;
     }
 
     public HistoryContent(String className, String createdDate, String actor, String methodName, Object object) {
@@ -62,6 +57,14 @@ public class HistoryContent {
 
     public void setObject(Object object) {
         this.object = object;
+    }
+
+    public boolean getIsSuccessful() {
+        return isSuccessful;
+    }
+
+    public void setIsSuccessful(boolean isSuccessful) {
+        this.isSuccessful = isSuccessful;
     }
 
 }
